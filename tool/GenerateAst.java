@@ -17,10 +17,30 @@ public class GenerateAst {
     }
     String outputDir = args[0];
     defineAst(outputDir, "Expr", Arrays.asList(
+        "Assign   : Token name, Expr value",
+
         "Binary   : Expr left, Token operator, Expr right",
         "Grouping : Expr expression",
         "Literal  : Object value",
-        "Unary    : Token operator, Expr right"));
+              "Logical  : Expr left, Token operator, Expr right",
+
+        "Unary    : Token operator, Expr right",
+        "Variable : Token name"));
+
+    // statment and expression grammar
+    defineAst(outputDir, "Stmt", Arrays.asList(
+        "Block      : List<Stmt> statements",
+        "If         : Expr condition, Stmt thenBranch," +
+            " Stmt elseBranch",
+        "Expression : Expr expression",
+        "Print      : Expr expression",
+        // It stores the name token so we know what it’s declaring, along with the
+        // initializer expression.
+        "Var        : Token name, Expr initializer",
+              "While      : Expr condition, Stmt body"
+
+
+    ));
   }
 
   private static void defineAst(
@@ -34,7 +54,7 @@ public class GenerateAst {
     writer.println("import java.util.List;");
     writer.println();
     writer.println("abstract class " + baseName + " {");
-        defineVisitor(writer, baseName, types);
+    defineVisitor(writer, baseName, types);
 
     // The AST classes.
     for (String type : types) {
@@ -50,11 +70,12 @@ public class GenerateAst {
     writer.close();
   }
 
- // Here, we iterate through all of the subclasses and declare a visit method for each one. 
- // When we define new expression types later, this will automatically include them.
+  // Here, we iterate through all of the subclasses and declare a visit method for
+  // each one.
+  // When we define new expression types later, this will automatically include
+  // them.
 
-
-    private static void defineVisitor(
+  private static void defineVisitor(
       PrintWriter writer, String baseName, List<String> types) {
     writer.println("  interface Visitor<R> {");
 
@@ -66,8 +87,6 @@ public class GenerateAst {
 
     writer.println("  }");
   }
-
-
 
   private static void defineType(
       PrintWriter writer, String baseName,
@@ -86,7 +105,7 @@ public class GenerateAst {
     }
 
     writer.println("    }");
-// Visitor pattern.
+    // Visitor pattern.
     writer.println();
     writer.println("    @Override");
     writer.println("    <R> R accept(Visitor<R> visitor) {");

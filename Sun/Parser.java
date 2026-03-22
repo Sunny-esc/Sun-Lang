@@ -1,12 +1,15 @@
 package Sun;
 
+import java.util.Arrays;
 
 import java.util.ArrayList;
 import java.util.List;
 import static Sun.TokenType.*;
 
 class Parser {
-    private static class ParseError extends RuntimeException {}
+    private static class ParseError extends RuntimeException {
+    }
+
     // the parser consumes a flat input sequence, only now we’re reading tokens
     // instead of characters.
     // We store the list of tokens and use current to point to the next token
@@ -18,107 +21,202 @@ class Parser {
         this.tokens = tokens;
     }
 
-    //parses a series of statements, as many as it can find until it hits the end of the input. 
-    // This is a pretty direct translation of the program rule into recursive descent style.
+    // parses a series of statements, as many as it can find until it hits the end
+    // of the input.
+    // This is a pretty direct translation of the program rule into recursive
+    // descent style.
 
-     List<Stmt> parse() {
-    List<Stmt> statements = new ArrayList<>();
-    while (!isAtEnd()) {
-      statements.add(declaration());
+    List<Stmt> parse() {
+        List<Stmt> statements = new ArrayList<>();
+        while (!isAtEnd()) {
+            statements.add(declaration());
+        }
+
+        return statements;
     }
+    // the expression grammar now and translate each rule to Java code.
+    // The first rule, expression, simply expands to the equality rule,
 
-    return statements; 
-  }
-// the expression grammar now and translate each rule to Java code.
-// The first rule, expression, simply expands to the equality rule,
-   
     private Expr expression() {
-    return assignment();
+        return assignment();
     }
 
-//explantion on page of statment title9
-      private Stmt declaration() {
-    try {
-      if (match(VAR)) return varDeclaration();
+    // explantion on page of statment title9
+    private Stmt declaration() {
+        try {
+            if (match(VAR))
+                return varDeclaration();
 
-      return statement();
-    } catch (ParseError error) {
-      synchronize();
-      return null;
+            return statement();
+        } catch (ParseError error) {
+            synchronize();
+            return null;
+        }
     }
-  }
 
     private Stmt statement() {
-    if (match(PRINT)) return printStatement();
-        if (match(LEFT_BRACE)) return new Stmt.Block(block());
+        if (match(IF))
+            return ifStatement();
+        if (match(WHILE))
+            return whileStatement();
+        if (match(FOR))
+            return forStatement();
 
+        if (match(PRINT))
+            return printStatement();
+        if (match(LEFT_BRACE))
+            return new Stmt.Block(block());
 
-    return expressionStatement();
-  }
+        return expressionStatement();
+    }
 
-  /*If the next token doesn’t look like any known kind of statement,
-   we assume it must be an expression statement. That’s the typical final fallthrough case when parsing a statement, 
-  since it’s hard to proactively recognize an expression from its first token.*/
+    private Stmt forStatement() {
+        consume(LEFT_PAREN, "Expect '(' after 'for'.");
+        Stmt initializer;
+        if (match(SEMICOLON)) {
+            initializer = null;
+        } else if (match(VAR)) {
+            initializer = varDeclaration();
+        } else {
+            initializer = expressionStatement();
+        }
+        Expr condition = null;
+        if (!check(SEMICOLON)) {
+            condition = expression();
+        }
+        consume(SEMICOLON, "Expect ';' after loop condition.");
+        Expr increment = null;
+        if (!check(RIGHT_PAREN)) {
+            increment = expression();
+        }
+        consume(RIGHT_PAREN, "Expect ')' after for clauses.");
+        Stmt body = statement();
+        if (increment != null) {
+            body = new Stmt.Block(
+                    Arrays.asList(
+                            body,
+                            new Stmt.Expression(increment)));
+        }
+        if (condition == null)
+            condition = new Expr.Literal(true);
+        body = new Stmt.While(condition, body);
+        if (initializer != null) {
+            body = new Stmt.Block(Arrays.asList(initializer, body));
+        }
+
+        return body;
+        // More here...
+    }
+
+    private Stmt ifStatement() {
+        consume(LEFT_PAREN, "Expect '(' after 'if'.");
+        Expr condition = expression();
+        consume(RIGHT_PAREN, "Expect ')' after if condition.");
+
+        Stmt thenBranch = statement();
+        Stmt elseBranch = null;
+        if (match(ELSE)) {
+            elseBranch = statement();
+        }
+
+        return new Stmt.If(condition, thenBranch, elseBranch);
+    }
+
+    /*
+     * If the next token doesn’t look like any known kind of statement,
+     * we assume it must be an expression statement. That’s the typical final
+     * fallthrough case when parsing a statement,
+     * since it’s hard to proactively recognize an expression from its first token.
+     */
     private Stmt printStatement() {
-    Expr value = expression();
-    consume(SEMICOLON, "Expect ';' after value.");
-    return new Stmt.Print(value);
-  }
-
-   private Stmt expressionStatement() {
-    Expr expr = expression();
-    consume(SEMICOLON, "Expect ';' after expression.");
-    return new Stmt.Expression(expr);
-  }
-
-  
- private List<Stmt> block() {
-    List<Stmt> statements = new ArrayList<>();
-
-    while (!check(RIGHT_BRACE) && !isAtEnd()) {
-      statements.add(declaration());
+        Expr value = expression();
+        consume(SEMICOLON, "Expect ';' after value.");
+        return new Stmt.Print(value);
     }
 
-    consume(RIGHT_BRACE, "Expect '}' after block.");
-    return statements;
-  }
-
-  private Expr assignment() {
-    Expr expr = equality();
-
-    if (match(EQUAL)) {
-      Token equals = previous();
-      Expr value = assignment();
-
-      if (expr instanceof Expr.Variable) {
-        Token name = ((Expr.Variable)expr).name;
-        return new Expr.Assign(name, value);
-      }
-
-      error(equals, "Invalid assignment target."); 
+    private Stmt expressionStatement() {
+        Expr expr = expression();
+        consume(SEMICOLON, "Expect ';' after expression.");
+        return new Stmt.Expression(expr);
     }
 
-    return expr;
-  }
+    private List<Stmt> block() {
+        List<Stmt> statements = new ArrayList<>();
 
+        while (!check(RIGHT_BRACE) && !isAtEnd()) {
+            statements.add(declaration());
+        }
 
+        consume(RIGHT_BRACE, "Expect '}' after block.");
+        return statements;
+    }
 
+    private Expr assignment() {
+        Expr expr = or();
+
+        if (match(EQUAL)) {
+            Token equals = previous();
+            Expr value = assignment();
+
+            if (expr instanceof Expr.Variable) {
+                Token name = ((Expr.Variable) expr).name;
+                return new Expr.Assign(name, value);
+            }
+
+            error(equals, "Invalid assignment target.");
+        }
+
+        return expr;
+    }
+
+    private Expr or() {
+        Expr expr = and();
+
+        while (match(OR)) {
+            Token operator = previous();
+            Expr right = and();
+            expr = new Expr.Logical(expr, operator, right);
+        }
+
+        return expr;
+    }
+
+    private Expr and() {
+        Expr expr = equality();
+
+        while (match(AND)) {
+            Token operator = previous();
+            Expr right = equality();
+            expr = new Expr.Logical(expr, operator, right);
+        }
+
+        return expr;
+    }
 
     private Stmt varDeclaration() {
-    Token name = consume(IDENTIFIER, "Expect variable name.");
+        Token name = consume(IDENTIFIER, "Expect variable name.");
 
-    Expr initializer = null;
-    if (match(EQUAL)) {
-      initializer = expression();
+        Expr initializer = null;
+        if (match(EQUAL)) {
+            initializer = expression();
+        }
+
+        consume(SEMICOLON, "Expect ';' after variable declaration.");
+        return new Stmt.Var(name, initializer);
     }
 
-    consume(SEMICOLON, "Expect ';' after variable declaration.");
-    return new Stmt.Var(name, initializer);
-  }
-// body of the rule contains a nonterminal—a reference to another rule—we call
-// that other rule’s method
-// equality → comparison ( ( "!=" | "==" ) comparison )* ;
-  
+    private Stmt whileStatement() {
+        consume(LEFT_PAREN, "Expect '(' after 'while'.");
+        Expr condition = expression();
+        consume(RIGHT_PAREN, "Expect ')' after condition.");
+        Stmt body = statement();
+
+        return new Stmt.While(condition, body);
+    }
+    // body of the rule contains a nonterminal—a reference to another rule—we call
+    // that other rule’s method
+    // equality → comparison ( ( "!=" | "==" ) comparison )* ;
+
     private Expr equality() {
         Expr expr = comparison();
 
@@ -130,42 +228,42 @@ class Parser {
 
         return expr;
         /*
-    This function parses expressions like:
-a == b != c == d and builds a syntax tree (AST).
-1. Start with left side
-Expr expr = comparison();
-👉 First, it parses left operand
-Example:
-a == b == c
-comparison() returns → a
-
-So now:
-expr = a
-2. Enter the loop (if operator found)
-while (match(BANG_EQUAL, EQUAL_EQUAL))
-
-👉 If it sees == or !=, it enters loop
-3. Take operator + right side
-Token operator = previous();
-Expr right = comparison();
-
-Example:
-a == b
-operator → ==
-right → b
-4. Build tree node
-expr = new Expr.Binary(expr, operator, right);
-👉 Combine:
-expr = (a == b)
-5. Loop again (important!)
-Now input:
-a == b == c
-Second iteration:
-expr = (a == b)
-operator = ==
-right = c
-Now:expr = ((a == b) == c)
-*/
+         * This function parses expressions like:
+         * a == b != c == d and builds a syntax tree (AST).
+         * 1. Start with left side
+         * Expr expr = comparison();
+         * 👉 First, it parses left operand
+         * Example:
+         * a == b == c
+         * comparison() returns → a
+         * 
+         * So now:
+         * expr = a
+         * 2. Enter the loop (if operator found)
+         * while (match(BANG_EQUAL, EQUAL_EQUAL))
+         * 
+         * 👉 If it sees == or !=, it enters loop
+         * 3. Take operator + right side
+         * Token operator = previous();
+         * Expr right = comparison();
+         * 
+         * Example:
+         * a == b
+         * operator → ==
+         * right → b
+         * 4. Build tree node
+         * expr = new Expr.Binary(expr, operator, right);
+         * 👉 Combine:
+         * expr = (a == b)
+         * 5. Loop again (important!)
+         * Now input:
+         * a == b == c
+         * Second iteration:
+         * expr = (a == b)
+         * operator = ==
+         * right = c
+         * Now:expr = ((a == b) == c)
+         */
 
     }
 
@@ -215,19 +313,22 @@ Now:expr = ((a == b) == c)
         return primary();
     }
 
-//primary        → NUMBER | STRING | "true" | "false" | "nil"
- //              | "(" expression ")" ;
+    // primary → NUMBER | STRING | "true" | "false" | "nil"
+    // | "(" expression ")" ;
     private Expr primary() {
-        if (match(FALSE)) return new Expr.Literal(false);
-        if (match(TRUE)) return new Expr.Literal(true);
-        if (match(NIL)) return new Expr.Literal(null);
+        if (match(FALSE))
+            return new Expr.Literal(false);
+        if (match(TRUE))
+            return new Expr.Literal(true);
+        if (match(NIL))
+            return new Expr.Literal(null);
 
         if (match(NUMBER, STRING)) {
             return new Expr.Literal(previous().literal);
         }
-  if (match(IDENTIFIER)) {
-      return new Expr.Variable(previous());
-    }
+        if (match(IDENTIFIER)) {
+            return new Expr.Variable(previous());
+        }
         if (match(LEFT_PAREN)) {
             Expr expr = expression();
             consume(RIGHT_PAREN, "Expect ')' after expression.");
@@ -238,10 +339,11 @@ Now:expr = ((a == b) == c)
     }
 
     private boolean match(TokenType... types) {
-          // This checks to see if the current token has any of the given types. 
-    // If so, it consumes the token and returns true. Otherwise, it returns false and leaves the current token alone. 
-    // The match() method is defined in terms of two more fundamental operations.
-   
+        // This checks to see if the current token has any of the given types.
+        // If so, it consumes the token and returns true. Otherwise, it returns false
+        // and leaves the current token alone.
+        // The match() method is defined in terms of two more fundamental operations.
+
         for (TokenType type : types) {
             if (check(type)) {
                 advance();
@@ -252,35 +354,37 @@ Now:expr = ((a == b) == c)
     }
 
     private Token consume(TokenType type, String message) {
-        //The first comparison nonterminal in the body translates to the first call to comparison() in the method.
-// We take that result and store it in a local variable.
-//  comparison     → term ( ( ">" | ">=" | "<" | "<=" ) term )* ;
-  ///After parsing the expression, the parser looks for the closing ) by calling consume().
+        // The first comparison nonterminal in the body translates to the first call to
+        // comparison() in the method.
+        // We take that result and store it in a local variable.
+        // comparison → term ( ( ">" | ">=" | "<" | "<=" ) term )* ;
+        /// After parsing the expression, the parser looks for the closing ) by
+        /// calling consume().
 
-        if (check(type)) return advance();
+        if (check(type))
+            return advance();
         throw error(peek(), message);
     }
 
+    // The check() method returns true if the current token is of the given type.
+    // Unlike match(), it never consumes the token, it only looks at it.
 
-
-  //The check() method returns true if the current token is of the given type. 
-  // Unlike match(), it never consumes the token, it only looks at it.
- 
     private boolean check(TokenType type) {
-        if (isAtEnd()) return false;
+        if (isAtEnd())
+            return false;
         return peek().type == type;
     }
 
-    // The advance() method consumes the current token and returns it, 
- // similar to how our scanner’s corresponding method crawled through characters.
+    // The advance() method consumes the current token and returns it,
+    // similar to how our scanner’s corresponding method crawled through characters.
 
     private Token advance() {
-        if (!isAtEnd()) current++;
+        if (!isAtEnd())
+            current++;
         return previous();
     }
 
-    //  These methods bottom out on the last handful of primitive operations.
-
+    // These methods bottom out on the last handful of primitive operations.
 
     private boolean isAtEnd() {
         return peek().type == EOF;
@@ -299,25 +403,27 @@ Now:expr = ((a == b) == c)
         return new ParseError();
     }
 
+    // isAtEnd() checks if we’ve run out of tokens to parse.
+    // peek() returns the current token we have yet to consume, and
+    // previous() returns the most recently consumed token.
+    // The latter makes it easier to use match() and then access the just-matched
+    // token.
 
-//   isAtEnd() checks if we’ve run out of tokens to parse.
-//  peek() returns the current token we have yet to consume, and 
-// previous() returns the most recently consumed token.
-//    The latter makes it easier to use match() and then access the just-matched token.
-
-
-
-
-/*It discards tokens until it thinks it has found a statement boundary. 
-After catching a ParseError, we’ll call this and then we are hopefully back in sync.
- When it works well, we have discarded tokens that would have likely caused cascaded errors anyway, 
-and now we can parse the rest of the file starting at the next statement.*/
+    /*
+     * It discards tokens until it thinks it has found a statement boundary.
+     * After catching a ParseError, we’ll call this and then we are hopefully back
+     * in sync.
+     * When it works well, we have discarded tokens that would have likely caused
+     * cascaded errors anyway,
+     * and now we can parse the rest of the file starting at the next statement.
+     */
 
     private void synchronize() {
         advance();
 
         while (!isAtEnd()) {
-            if (previous().type == SEMICOLON) return;
+            if (previous().type == SEMICOLON)
+                return;
 
             switch (peek().type) {
                 case CLASS:
