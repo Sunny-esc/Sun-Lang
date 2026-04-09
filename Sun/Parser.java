@@ -44,6 +44,10 @@ class Parser {
     // explantion on page of statment title9
     private Stmt declaration() {
         try {
+                  if (match(CLASS)) return classDeclaration();
+
+                  if (match(FUN)) return function("function");
+
             if (match(VAR))
                 return varDeclaration();
 
@@ -53,8 +57,25 @@ class Parser {
             return null;
         }
     }
+  private Stmt classDeclaration() {
+    Token name = consume(IDENTIFIER, "Expect class name.");
+    consume(LEFT_BRACE, "Expect '{' before class body.");
+
+    List<Stmt.Function> methods = new ArrayList<>();
+    while (!check(RIGHT_BRACE) && !isAtEnd()) {
+      methods.add(function("method"));
+    }
+
+    consume(RIGHT_BRACE, "Expect '}' after class body.");
+
+    return new Stmt.Class(name, methods);
+  }
+
+
 
     private Stmt statement() {
+            if (match(RETURN)) return returnStatement();
+
         if (match(IF))
             return ifStatement();
         if (match(WHILE))
@@ -133,12 +154,48 @@ class Parser {
         consume(SEMICOLON, "Expect ';' after value.");
         return new Stmt.Print(value);
     }
+      private Stmt returnStatement() {
+    Token keyword = previous();
+    Expr value = null;
+    if (!check(SEMICOLON)) {
+      value = expression();
+    }
+
+    consume(SEMICOLON, "Expect ';' after return value.");
+    return new Stmt.Return(keyword, value);
+  }
 
     private Stmt expressionStatement() {
         Expr expr = expression();
         consume(SEMICOLON, "Expect ';' after expression.");
         return new Stmt.Expression(expr);
     }
+
+  private Stmt.Function function(String kind) {
+    Token name = consume(IDENTIFIER, "Expect " + kind + " name.");
+    //code for handling arguments in a call, except not split out into a helper method.
+    // The outer if statement handles the zero parameter case, and the inner while loop parses parameters as long as we find commas to separate them.
+    // The result is the list of tokens for each parameter’s name
+        consume(LEFT_PAREN, "Expect '(' after " + kind + " name.");
+    List<Token> parameters = new ArrayList<>();
+    if (!check(RIGHT_PAREN)) {
+      do {
+        if (parameters.size() >= 255) {
+          error(peek(), "Can't have more than 255 parameters.");
+        }
+
+        parameters.add(
+            consume(IDENTIFIER, "Expect parameter name."));
+      } while (match(COMMA));
+    }
+    consume(RIGHT_PAREN, "Expect ')' after parameters.");
+//we consume the { at the beginning of the body here before calling block(). That’s because block() assumes the brace token has already been matched. 
+// zConsuming it here lets us report a more precise error message if the { isn’t found since we know it’s in the context of a function declaration.
+     consume(LEFT_BRACE, "Expect '{' before " + kind + " body.");
+    List<Stmt> body = block();
+    return new Stmt.Function(name, parameters, body);
+  }
+
 
     private List<Stmt> block() {
         List<Stmt> statements = new ArrayList<>();
@@ -310,9 +367,44 @@ class Parser {
             return new Expr.Unary(operator, right);
         }
 
-        return primary();
+    return call();
     }
 
+    //The code to parse the argument list is in this helper:
+
+
+  private Expr finishCall(Expr callee) {
+    List<Expr> arguments = new ArrayList<>();
+    if (!check(RIGHT_PAREN)) {
+      do {
+         if (arguments.size() >= 255) {
+          error(peek(), "Can't have more than 255 arguments.");
+        }
+        arguments.add(expression());
+      } while (match(COMMA));
+    }
+
+    Token paren = consume(RIGHT_PAREN,
+                          "Expect ')' after arguments.");
+
+    return new Expr.Call(callee, paren, arguments);
+  }
+
+//First, we parse a primary expression, the “left operand” to the call.
+// Then, each time we see a (, we call finishCall() to parse the call expression using the previously parsed expression as the callee
+private Expr call() {
+    Expr expr = primary();
+
+    while (true) { 
+      if (match(LEFT_PAREN)) {
+        expr = finishCall(expr);
+      } else {
+        break;
+      }
+    }
+
+    return expr;
+  }
     // primary → NUMBER | STRING | "true" | "false" | "nil"
     // | "(" expression ")" ;
     private Expr primary() {

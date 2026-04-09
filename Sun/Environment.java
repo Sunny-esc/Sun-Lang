@@ -45,4 +45,24 @@ class Environment {
    void define(String name, Object value) {
     values.put(name, value);
   }
+
+/*This walks a fixed number of hops up the parent chain and returns the environment there. Once we have that, getAt() simply returns the value of the variable in that environment’s map. It doesn’t even have to check to see if the variable is there—we know it will be because the resolver already found it before. */
+    Environment ancestor(int distance) {
+    Environment environment = this;
+    for (int i = 0; i < distance; i++) {
+      environment = environment.enclosing; 
+    }
+
+    return environment;
+  }
+
+    Object getAt(int distance, String name) {
+    return ancestor(distance).values.get(name);
+  }
+
+//As getAt() is to get(), assignAt() is to assign(). It walks a fixed number of environments, and then stuffs the new value in that map.
+//Those are the only changes to Interpreter
+    void assignAt(int distance, Token name, Object value) {
+    ancestor(distance).values.put(name.lexeme, value);
+  }
 }
