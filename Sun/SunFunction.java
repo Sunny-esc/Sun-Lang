@@ -1,11 +1,11 @@
 package Sun;
 import java.util.List;
 
-class LoxFunction implements LoxCallable {
+class SunFunction implements LoxCallable {
   private final Stmt.Function declaration;
     private final Environment closure;
 
- LoxFunction(Stmt.Function declaration, Environment closure) {
+ SunFunction(Stmt.Function declaration, Environment closure) {
     this.closure = closure;    this.declaration = declaration;
   }
     @Override

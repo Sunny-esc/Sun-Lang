@@ -18,7 +18,8 @@ class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void> {
   }
   private enum FunctionType {
     NONE,
-    FUNCTION
+    FUNCTION,
+    METHOD
   }
  
       @Override
@@ -36,6 +37,12 @@ class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void> {
   public Void visitClassStmt(Stmt.Class stmt) {
     declare(stmt.name);
     define(stmt.name);
+    //We iterate through the methods in the class body and call the resolveFunction() method
+    for (Stmt.Function method : stmt.methods) {
+      FunctionType declaration = FunctionType.METHOD;
+      resolveFunction(method, declaration); 
+    }
+
     return null;
   }
 //An expression statement contains a single expression to traverse.
@@ -135,6 +142,13 @@ class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void> {
     return null;
   }
 
+//get keyword for instance access
+@Override
+  public Void visitGetExpr(Expr.Get expr) {
+    resolve(expr.object);
+    return null;
+  }
+
 //  Parentheses are easy.
 @Override
   public Void visitGroupingExpr(Expr.Grouping expr) {
@@ -158,6 +172,13 @@ class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void> {
     return null;
   }
 
+  //handles the parsed code for set opp
+ @Override
+  public Void visitSetExpr(Expr.Set expr) {
+    resolve(expr.value);
+    resolve(expr.object);
+    return null;
+  }
   //We resolve its one operand.
 @Override
   public Void visitUnaryExpr(Expr.Unary expr) {

@@ -1,0 +1,9 @@
+class Bacon {
+  eat() {
+    print "Crunch crunch crunch!";
+  }
+}
+
+Bacon().eat();
+
+//edge case passed on 10/4/26

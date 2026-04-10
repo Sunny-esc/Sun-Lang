@@ -218,7 +218,11 @@ class Parser {
             if (expr instanceof Expr.Variable) {
                 Token name = ((Expr.Variable) expr).name;
                 return new Expr.Assign(name, value);
-            }
+            } 
+            // handle turning an Expr.Get expression on the left into the corresponding Expr.Set.
+            else if (expr instanceof Expr.Get) {
+        Expr.Get get = (Expr.Get)expr;
+        return new Expr.Set(get.object, get.name, value);}
 
             error(equals, "Invalid assignment target.");
         }
@@ -389,7 +393,7 @@ class Parser {
 
     return new Expr.Call(callee, paren, arguments);
   }
-
+  
 //First, we parse a primary expression, the “left operand” to the call.
 // Then, each time we see a (, we call finishCall() to parse the call expression using the previously parsed expression as the callee
 private Expr call() {
@@ -398,7 +402,13 @@ private Expr call() {
     while (true) { 
       if (match(LEFT_PAREN)) {
         expr = finishCall(expr);
-      } else {
+      }  
+      //this is dot opp for accessing instance 
+      else if (match(DOT)) {
+        Token name = consume(IDENTIFIER,
+            "Expect property name after '.'.");
+        expr = new Expr.Get(expr, name);}
+        else {
         break;
       }
     }

@@ -66,7 +66,23 @@ class Interpreter implements Expr.Visitor<Object>,
 
     return evaluate(expr.right);
   }
+/*----------------------------------------------------------------------------------------------------*/
 
+//Set opp
+//setting empty or synatxically wrong instance calling -> runtime error -> parser -> resolver -> interpreter 
+ @Override
+  public Object visitSetExpr(Expr.Set expr) {
+    Object object = evaluate(expr.object);
+
+    if (!(object instanceof SunInstance)) { 
+      throw new RuntimeError(expr.name,
+                             "Only instances have fields.");
+    }
+
+    Object value = evaluate(expr.value);
+    ((SunInstance)object).set(expr.name, value);
+    return value;
+  }
 
 
     /* Evaluating unary expressions */
@@ -207,8 +223,15 @@ class Interpreter implements Expr.Visitor<Object>,
     @Override
   public Void visitClassStmt(Stmt.Class stmt) {
     environment.define(stmt.name.lexeme, null);
-    SunClass klass = new SunClass(stmt.name.lexeme);
-    environment.assign(stmt.name, klass);
+    //lass declaration statement, we turn the syntactic representation of the class—its AST node—into its runtime representation
+   Map<String, SunFunction> methods = new HashMap<>();
+    for (Stmt.Function method : stmt.methods) {
+      SunFunction function = new SunFunction(method, environment);
+      methods.put(method.name.lexeme, function);
+    }
+
+    SunClass klass = new SunClass(stmt.name.lexeme, methods);
+        environment.assign(stmt.name, klass);
     return null;
   }
 
@@ -220,7 +243,7 @@ class Interpreter implements Expr.Visitor<Object>,
 
   @Override
   public Void visitFunctionStmt(Stmt.Function stmt) {
-    LoxFunction function = new LoxFunction(stmt, environment);
+    SunFunction function = new SunFunction(stmt, environment);
     environment.define(stmt.name.lexeme, function);
     return null;
   }
@@ -367,6 +390,7 @@ class Interpreter implements Expr.Visitor<Object>,
           "Can only call functions and classes.");
     }
 
+   
 
     LoxCallable function = (LoxCallable)callee;
        if (arguments.size() != function.arity()) {
@@ -375,6 +399,22 @@ class Interpreter implements Expr.Visitor<Object>,
           arguments.size() + ".");
     }
     return function.call(this, arguments);
+  }
+
+
+
+
+
+   //reff to class docs Get key
+      @Override
+  public Object visitGetExpr(Expr.Get expr) {
+    Object object = evaluate(expr.object);
+    if (object instanceof SunInstance) {
+      return ((SunInstance) object).get(expr.name);
+    }
+
+    throw new RuntimeError(expr.name,
+        "Only instances have properties.");
   }
 
 }
