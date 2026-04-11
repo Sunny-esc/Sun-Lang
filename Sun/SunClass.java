@@ -33,6 +33,11 @@ SunFunction findMethod(String name) {
                      List<Object> arguments) {
     //ref to loxinstance as suninstance
     SunInstance instance = new SunInstance(this);
+        //constructor creation
+        SunFunction initializer = findMethod("init");
+          if (initializer != null) {
+           initializer.bind(instance).call(interpreter, arguments);
+            }
     return instance;
   }
 
@@ -40,7 +45,8 @@ SunFunction findMethod(String name) {
   //validates that you passed the right number of arguments to a callable.
   @Override
   public int arity() {
-    // For now, we’ll say you can’t pass any.
-    return 0;
+   SunFunction initializer = findMethod("init");
+    if (initializer == null) return 0;
+    return initializer.arity();
   }
 }

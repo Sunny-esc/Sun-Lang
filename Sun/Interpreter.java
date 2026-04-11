@@ -85,6 +85,11 @@ class Interpreter implements Expr.Visitor<Object>,
   }
 
 
+   @Override
+  public Object visitThisExpr(Expr.This expr) {
+    return lookUpVariable(expr.keyword, expr);
+  }
+
     /* Evaluating unary expressions */
     @Override
     public Object visitUnaryExpr(Expr.Unary expr) {
@@ -226,7 +231,8 @@ class Interpreter implements Expr.Visitor<Object>,
     //lass declaration statement, we turn the syntactic representation of the class—its AST node—into its runtime representation
    Map<String, SunFunction> methods = new HashMap<>();
     for (Stmt.Function method : stmt.methods) {
-      SunFunction function = new SunFunction(method, environment);
+     SunFunction function = new SunFunction(method, environment,
+          method.name.lexeme.equals("init"));
       methods.put(method.name.lexeme, function);
     }
 
@@ -243,8 +249,8 @@ class Interpreter implements Expr.Visitor<Object>,
 
   @Override
   public Void visitFunctionStmt(Stmt.Function stmt) {
-    SunFunction function = new SunFunction(stmt, environment);
-    environment.define(stmt.name.lexeme, function);
+ SunFunction function = new SunFunction(stmt, environment,   false);   
+                                           environment.define(stmt.name.lexeme, function);
     return null;
   }
 

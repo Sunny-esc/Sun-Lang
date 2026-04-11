@@ -4,10 +4,21 @@ import java.util.List;
 class SunFunction implements LoxCallable {
   private final Stmt.Function declaration;
     private final Environment closure;
+ private final boolean isInitializer;
 
- SunFunction(Stmt.Function declaration, Environment closure) {
+
+    
+ SunFunction(Stmt.Function declaration, Environment closure,  boolean isInitializer) {
+      this.isInitializer = isInitializer;
+
     this.closure = closure;    this.declaration = declaration;
   }
+
+    SunFunction bind(SunInstance instance) {
+    Environment environment = new Environment(closure);
+    environment.define("this", instance);
+  return new SunFunction(declaration, environment,
+                           isInitializer);  }
     @Override
   public String toString() {
     return "<fn " + declaration.name.lexeme + ">";
@@ -30,7 +41,12 @@ class SunFunction implements LoxCallable {
   try {
       interpreter.executeBlock(declaration.body, environment);
     } catch (Return returnValue) {
+            if (isInitializer) return closure.getAt(0, "this");
+
       return returnValue.value;
-    }    return null;
+    }    
+        if (isInitializer) return closure.getAt(0, "this");
+
+    return null;
   }
 }

@@ -17,7 +17,8 @@ class SunInstance {
       return fields.get(name.lexeme);
     }
         SunFunction method = klass.findMethod(name.lexeme);
-    if (method != null) return method;
+   // if (method != null) return method; //update on class by adding this cmd on 11/04/26
+    if (method != null) return method.bind(this);
 
     throw new RuntimeError(name, 
         "Undefined property '" + name.lexeme + "'.");

@@ -1,0 +1,10 @@
+class Egotist {
+  speak() {
+    print this;
+  }
+}
+
+var method = Egotist().speak;
+method();
+
+//test passed on 11.04.26
