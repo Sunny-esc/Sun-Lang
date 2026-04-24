@@ -227,6 +227,15 @@ class Interpreter implements Expr.Visitor<Object>,
 
     @Override
   public Void visitClassStmt(Stmt.Class stmt) {
+
+    Object superclass  = null ;
+    if(stmt.superclass != null){
+      superclass = evaluate(stmt.superclass);
+      if(!(superclass instanceof SunClass)){
+        throw new RuntimeError(stmt.superclass.name,"Super class must be class.");
+      }
+    }
+
     environment.define(stmt.name.lexeme, null);
     //lass declaration statement, we turn the syntactic representation of the class—its AST node—into its runtime representation
    Map<String, SunFunction> methods = new HashMap<>();
@@ -236,7 +245,7 @@ class Interpreter implements Expr.Visitor<Object>,
       methods.put(method.name.lexeme, function);
     }
 
-    SunClass klass = new SunClass(stmt.name.lexeme, methods);
+    SunClass klass = new SunClass(stmt.name.lexeme,(SunClass)superclass, methods);
         environment.assign(stmt.name, klass);
     return null;
   }

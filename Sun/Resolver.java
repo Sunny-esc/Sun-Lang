@@ -54,6 +54,17 @@ class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void> {
 
     declare(stmt.name);
     define(stmt.name);
+
+    //handle empty and uncessary class inheritance edge case reslover mentioned in inheritance line problem
+    if(stmt.superclass != null && stmt.name.lexeme.equals(stmt.superclass.name.lexeme) ){
+      Lox.error(stmt.superclass.name,"A class can't inherit from itself");
+      
+    }
+    //inheritance resolver
+    if(stmt.superclass != null ){
+      resolve(stmt.superclass);
+    }
+
     // it will make the this keywrd in scope
     beginScope();
     scopes.peek().put("this", true);

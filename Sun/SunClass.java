@@ -6,17 +6,23 @@ import java.util.Map;
 
 class SunClass implements LoxCallable {
   final String name;
+  final SunClass superclass;
 
    private final Map<String, SunFunction> methods;
 
-  SunClass(String name, Map<String, SunFunction> methods) {
+  SunClass(String name,SunClass superClass, Map<String, SunFunction> methods) {
     this.name = name;
+    this.superclass = superClass;
     this.methods = methods;
   }
 
 SunFunction findMethod(String name) {
     if (methods.containsKey(name)) {
       return methods.get(name);
+    }
+
+     if (superclass != null) {
+      return superclass.findMethod(name);
     }
 
     return null;
