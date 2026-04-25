@@ -15,7 +15,7 @@ It is based on an Abstract Syntax Tree (AST) interpreter and supports object-ori
 
 Prebuilt binaries are available on the Releases page:
 
-https://github.com/s19_ctrl/sun_lang/releases
+https://github.com/sunny-esc/Sun_Lang/releases
 
 Download the appropriate executable for your system and run:
 
