@@ -1,0 +1,1322 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Docs — YourInterpreter</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- ── Nav ── -->
+  <nav class="site-nav">
+    <a href="index.html" class="brand">Sun<span>lang</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="docs.html" class="active">Docs</a></li>
+      <li><a href="download.html">Download</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="https://github.com/" target="_blank">GitHub</a></li>
+    </ul>
+  </nav>
+
+  <div class="docs-wrapper">
+
+    <!-- ── Sidebar ── -->
+    <aside class="docs-sidebar">
+
+      <!-- Introduction -->
+      <div class="sidebar-section">
+        <span class="sidebar-group-label">Introduction</span>
+        <a href="#intro-overview" class="sidebar-link active">Overview</a>
+        <a href="#intro-install" class="sidebar-link">Installation</a>
+        <a href="#intro-hello" class="sidebar-link">Hello World</a>
+      </div>
+
+      <!-- Syntax -->
+      <div class="sidebar-section">
+        <span class="sidebar-group-label">Syntax</span>
+        <a href="#syntax-basics" class="sidebar-link">Basics</a>
+        <a href="#syntax-expressions" class="sidebar-link">Expressions</a>
+        <a href="#syntax-statements" class="sidebar-link">Statements</a>
+        <a href="#syntax-control" class="sidebar-link">Control Flow</a>
+      </div>
+
+      <!-- Dev Notes — collapsible -->
+      
+      <div class="sidebar-section">
+        <span class="sidebar-group-label">Dev Notes</span>
+        <a href="#dn-parse" class="sidebar-link">Parsing</a>
+                <a href="#dn-stmt" class="sidebar-link">Statments logic</a>
+                <a href="#dn-cf" class="sidebar-link">Control flow logic</a>
+                <a href="#dn-fn" class="sidebar-link">Function logic</a>
+
+        <a class="sidebar-link sidebar-toggle" data-target="dn-eval" href="#">
+          Evaluation <span class="chevron">▶</span>
+        </a>
+        <div class="sidebar-sub" id="dn-eval">
+          <a href="#dn-eval-1" class="sidebar-link">Evaluate expressions</a>
+          <a href="#dn-eval-2" class="sidebar-link">Runtime error</a>
+        </div>
+
+
+        <a class="sidebar-link sidebar-toggle" data-target="dn-variables" href="#">
+          Variables <span class="chevron">▶</span>
+        </a>
+        <div class="sidebar-sub" id="dn-variables">
+          <a href="#dn-variables-scope" class="sidebar-link">Scope &amp; Binding</a>
+          <a href="#dn-variables-env" class="sidebar-link">Environment Chain</a>
+        </div>
+
+
+        <a class="sidebar-link sidebar-toggle" data-target="dn-classes" href="#">
+          Classes <span class="chevron">▶</span>
+        </a>
+        <div class="sidebar-sub" id="dn-classes">
+          <a href="#dn-classes-instance" class="sidebar-link">Instances &amp; Fields</a>
+          <a href="#dn-classes-inherit" class="sidebar-link">Inheritance</a>
+        </div>
+
+        
+
+     
+
+        <a class="sidebar-link sidebar-toggle" data-target="dn-errors" href="#">
+          Error Handling <span class="chevron">▶</span>
+        </a>
+        <div class="sidebar-sub" id="dn-errors">
+          <a href="#dn-errors-parse" class="sidebar-link">Parse Errors</a>
+          <a href="#dn-errors-runtime" class="sidebar-link">Runtime Errors</a>
+        </div>
+
+      </div>
+
+    </aside>
+
+    <!-- ── Main Content ── -->
+    <main class="docs-content">
+
+      <!-- ════ INTRODUCTION ════ -->
+      <section class="doc-section" id="intro-overview">
+        <span class="doc-tag">Introduction</span>
+        <h2>Overview</h2>
+        <p>
+          <!-- TODO: describe what your interpreter is and why you built it -->
+          YourLang is a dynamically-typed, interpreted language built entirely from scratch.
+          This documentation covers both the language itself and the internals of the interpreter —
+          useful for anyone wanting to understand the implementation.
+        </p>
+        <p>
+          <!-- TODO: any design goals, inspirations, or decisions -->
+          this language is based on the java as the core and Aot for executable generation ,Ast based compliation.The
+          primary objective of the project is to learning the basic of the working of the interperter?]
+        </p>
+      </section>
+
+      <section class="doc-section" id="intro-install">
+        <h3>Installation</h3>
+        <p><!-- TODO: how to install / build from source --></p>
+        <div class="code-block">
+          <code><span class="code-comment"># TODO: your install steps</span>
+Dowload the direct release of Machine exectuable file from release 
+https://github.com/Sunny-esc/Sun-Lang/releases
+</code>
+        </div>
+        <span> Dependency requriement Jdk version 8+</span>
+        <div class="code-block">
+          <code><span class="code-comment"># TODO: Running from the source itself steps</span>
+git clone https://github.com/Sunny-esc/Sun-Lang
+cd Sun-Lang && cd Sun
+java Lox.java
+</code>
+        </div>
+      </section>
+
+      <section class="doc-section" id="intro-hello">
+        <h3>Hello, World</h3>
+        <p><!-- TODO: simplest possible program in your language --></p>
+        <div class="code-block"><code><span class="code-comment">// hello world in Sun language</span>
+<span class="code-fn">print</span><span class="code-str">"Hello, world!"</span>;</code></div>
+      </section>
+
+      <hr class="thin" />
+
+      <!-- ════ SYNTAX ════ -->
+      <section class="doc-section" id="syntax-basics">
+        <span class="doc-tag">Syntax</span>
+        <h2>Basics</h2>
+        <p><!-- TODO: comments, whitespace, identifiers, literals --></p>
+        <div class="code-block"><code><span class="code-comment">// single-line comment</span>
+
+<span class="code-comment">/* block comment */</span>
+
+<span class="code-kw">var</span> x = <span class="code-num">42</span>;
+<span class="code-kw">var</span> name = <span class="code-str">"YourLang"</span>;
+<span class="code-kw">var</span> flag = <span class="code-kw">true</span>;</code></div>
+      </section>
+
+      <section class="doc-section" id="syntax-expressions">
+        <h3>Expressions</h3>
+        <p><!-- TODO: arithmetic, comparison, logical operators --></p>
+        <span class="code-comment">Arithmetic expression </span>
+        <div class="code-block">
+          <code>
+add + me;
+subtract - me;
+multiply * me;
+divide / me;
+        </code>
+        </div>
+        <span class="code-comment">Arithmetic expression </span>
+
+        <div class="code-block">
+          <code><span class="code-comment">// TODO: fill in your expression examples</span>
+less < than;
+lessThan <= orEqual;
+greater > than;
+greaterThan >= orEqual;
+
+1 == 2;         // false.
+"cat" != "dog"; // true.
+        </code>
+        </div>
+        <span class="code-comment">Arithmetic expression </span>
+
+        <div class="code-block">
+          <code><span class="code-comment">// TODO: fill in your expression examples</span>
+!true;  // false.
+!false; // true.
+false or false; // false.
+true or false;  // true.
+        </code>
+        </div>
+      </section>
+
+      <section class="doc-section" id="syntax-statements">
+        <h3>Statements</h3>
+        <p><!-- TODO: variable declarations, print, blocks, etc --></p>
+        <div class="code-block"><code><span class="code-comment">// TODO: fill in your statement examples</span></code>
+        </div>
+      </section>
+      <section class="doc-section" id="syntax-statements">
+        <h3>Functions</h3>
+        <p><!-- TODO: variable declarations, print, blocks, etc --></p>
+        <div class="code-block"><code>
+          <span class="code-comment">// Functions examples</span>
+fun printSum(a, b) {
+  print a + b;
+}
+
+fun returnSum(a, b) {
+  return a + b;
+}
+
+printsum(1,2);
+returnsum(2,3);
+        </code>
+        </div>
+      </section>
+
+      <section class="doc-section" id="syntax-control">
+        <h3>Control Flow</h3>
+        <p><!-- TODO: if/else, while, for --></p>
+        <div class="code-block"><code><span class="code-kw">if</span> (x &gt; <span class="code-num">0</span>) {
+  <span class="code-comment">// TODO</span>
+} <span class="code-kw">else</span> {
+  <span class="code-comment">// TODO</span>
+}
+
+<span class="code-kw">while</span> (x &lt; <span class="code-num">10</span>) {
+  x = x + <span class="code-num">1</span>;
+}
+
+for (var a = 1; a < 10; a = a + 1) {
+  print a;
+}
+</code>
+
+        </div>
+      </section>
+
+      <hr class="thin" />
+
+
+      <section class="doc-section" id="dn-parse">
+
+        <section class="doc-section" id="dn-parse-1">
+          <span class="doc-tag">Dev Notes / parsing</span>
+          <h2>Ambiguity &amp; Expression Parsing</h2>
+          <p><!-- TODO: explain how parser resolves expressions --></p>
+
+          <div class="callout">
+            <span class="callout-label">Design note</span>
+            <p>
+              <strong>Ambiguity in Parsing</strong><br>
+              When parsing expressions, ambiguity arises when a single sequence of tokens can be interpreted in multiple
+              ways.
+              The parser’s role is not only to validate syntax but also to determine how different parts of the input
+              relate to
+              the grammar.
+
+              Without clear rules, the parser may construct different syntax trees for the same expression, leading to
+              different
+              evaluation results.
+
+              <br><br>
+
+              <strong>Operator Precedence</strong><br>
+              Precedence defines the order in which different operators are evaluated. Operators with higher precedence
+              are
+              evaluated before those with lower precedence—they “bind tighter” to their operands.
+
+              For example, in an expression combining division and subtraction, division is evaluated first due to its
+              higher
+              precedence.
+
+              <br><br>
+
+              <strong>Associativity</strong><br>
+              Associativity determines evaluation order when multiple operators of the same type appear in sequence.
+
+            <ul>
+              <li><strong>Left-associative:</strong> evaluation proceeds from left to right</li>
+              <li><strong>Right-associative:</strong> evaluation proceeds from right to left</li>
+            </ul>
+
+            For instance:
+            <pre><code>5 - 3 - 1</code></pre>
+            is interpreted as:
+            <pre><code>(5 - 3) - 1</code></pre>
+
+            <br>
+
+            Without well-defined precedence and associativity rules, expressions become ambiguous and unreliable.
+
+            <br><br>
+
+            <strong>Operator Hierarchy</strong>
+            <table>
+              <tr>
+                <th>Name</th>
+                <th>Operators</th>
+                <th>Associativity</th>
+              </tr>
+              <tr>
+                <td>Equality</td>
+                <td>== !=</td>
+                <td>Left</td>
+              </tr>
+              <tr>
+                <td>Comparison</td>
+                <td>&gt; &gt;= &lt; &lt;=</td>
+                <td>Left</td>
+              </tr>
+              <tr>
+                <td>Term</td>
+                <td>- +</td>
+                <td>Left</td>
+              </tr>
+              <tr>
+                <td>Factor</td>
+                <td>/ *</td>
+                <td>Left</td>
+              </tr>
+              <tr>
+                <td>Unary</td>
+                <td>! -</td>
+                <td>Right</td>
+              </tr>
+            </table>
+            </p>
+          </div>
+        </section>
+
+        <section class="doc-section" id="dn-parse-2">
+          <span class="doc-tag">Dev Notes / parsing-technique</span>
+          <h2>Recursive Descent Parsing</h2>
+          <p><!-- TODO: explain parser implementation --></p>
+
+          <div class="callout">
+            <span class="callout-label">Design note</span>
+            <p>
+              There are many parsing techniques—such as LL, LR, LALR, parser combinators, and others—but for this
+              interpreter,
+              a simpler and highly effective approach is used: <strong>recursive descent parsing</strong>.
+
+              <br><br>
+
+              Recursive descent is a <strong>top-down parsing technique</strong>. It starts from the highest-level
+              grammar rule
+              (typically <code>expression</code>) and progressively breaks it down into smaller sub-expressions until
+              reaching
+              the most basic elements of the syntax tree.
+
+              <br><br>
+
+              This method relies on straightforward, handwritten code instead of parser generators like Yacc, Bison, or
+              ANTLR.
+              Despite its simplicity, recursive descent is:
+            <ul>
+              <li>Efficient and fast</li>
+              <li>Easy to understand and maintain</li>
+              <li>Capable of handling complex grammar structures</li>
+              <li>Well-suited for detailed error reporting</li>
+            </ul>
+
+            The parser’s control flow naturally mirrors the structure of the grammar, making the implementation
+            intuitive and
+            closely aligned with the language design.
+            </p>
+          </div>
+        </section>
+
+        <section class="doc-section" id="dn-parse-3">
+          <span class="doc-tag">Dev Notes / errors</span>
+          <h2>Syntax Errors &amp; Recovery</h2>
+          <p><!-- TODO: explain error handling strategy --></p>
+
+          <div class="callout">
+            <span class="callout-label">Design note</span>
+            <p>
+              <strong>Role of the Parser</strong><br>
+              A parser has two primary responsibilities:
+            <ul>
+              <li>Generate a syntax tree for valid input</li>
+              <li>Detect and report errors for invalid input</li>
+            </ul>
+
+            In real-world development environments, parsers frequently process incomplete or incorrect code. Therefore,
+            robust error handling is essential for a good user experience.
+
+            <br><br>
+
+            <strong>Error Handling Requirements</strong><br>
+            A well-designed parser should:
+            <ul>
+              <li>Detect and clearly report syntax errors</li>
+              <li>Avoid crashing or entering infinite loops</li>
+              <li>Continue parsing after encountering errors when possible</li>
+              <li>Report multiple errors in a single pass</li>
+              <li>Minimize cascading errors caused by earlier failures</li>
+            </ul>
+
+            <br>
+
+            <strong>Error Recovery</strong><br>
+            Error recovery is the mechanism that allows the parser to continue processing after encountering an error.
+
+            <br><br>
+
+            <strong>Panic Mode Recovery</strong><br>
+            In panic mode, the parser immediately stops processing the current construct when an error is detected. It
+            then
+            skips tokens until it reaches a point where parsing can safely resume. This process is called
+            <strong>synchronization</strong>.
+
+            <br><br>
+
+            <strong>Entering Panic Mode</strong><br>
+            For example, while parsing a parenthesized expression, if the parser fails to find the expected closing
+            <code>)</code>, it triggers an error and enters panic mode.
+
+            <br><br>
+
+            <strong>Synchronization in Recursive Descent</strong><br>
+            In recursive descent parsing, the parser’s state is implicitly stored in the call stack. Each active grammar
+            rule
+            corresponds to a function call.
+
+            To recover from an error:
+            <ul>
+              <li>The parser unwinds the call stack</li>
+              <li>Skips tokens until a safe synchronization point is found</li>
+              <li>Resumes parsing from a stable state</li>
+            </ul>
+
+            This strategy allows the parser to recover gracefully while continuing to provide useful feedback to the
+            user.
+            </p>
+          </div>
+        </section>
+      </section>
+
+
+      <section class="doc-section" id="dn-stmt">
+        <section class="doc-section" id="dn-stmt-1">
+  <span class="doc-tag">Dev Notes / statements</span>
+  <h2>Statements &amp; Expressions</h2>
+  <p><!-- TODO: explain statement execution model --></p>
+
+  <div class="callout">
+    <span class="callout-label">Design note</span>
+    <p>
+      <strong>Expression Statements</strong><br>
+      An expression statement allows an expression to appear where a statement is expected. These are primarily used
+      when evaluating expressions that produce side effects, such as function calls.
+
+      <pre><code>someFunction();</code></pre>
+
+      <br>
+
+      <strong>Print Statements</strong><br>
+      A <code>print</code> statement evaluates an expression and displays its result to the user.
+
+      <pre><code>print 2 + 1;</code></pre>
+
+      <br>
+
+      <strong>Grammar</strong>
+      <pre><code>
+program   → statement* EOF ;
+
+statement → exprStmt
+          | printStmt ;
+
+exprStmt  → expression ";" ;
+printStmt → "print" expression ";" ;
+      </code></pre>
+
+      <br>
+
+      <strong>Expressions vs Statements</strong>
+      <ul>
+        <li><strong>Expressions</strong> produce values and can be nested.</li>
+        <li><strong>Statements</strong> perform actions and control execution.</li>
+      </ul>
+
+      This separation ensures a clean and predictable structure in both parsing and execution.
+    </p>
+  </div>
+</section>
+
+<section class="doc-section" id="dn-stmt-2">
+  <span class="doc-tag">Dev Notes / ast</span>
+  <h2>Statement Syntax Trees</h2>
+  <p><!-- TODO: explain AST structure for statements --></p>
+
+  <div class="callout">
+    <span class="callout-label">Design note</span>
+    <p>
+      Expressions and statements are represented using separate class hierarchies in the AST.
+
+      <ul>
+        <li><code>Expr</code> → represents expressions (value-producing)</li>
+        <li><code>Stmt</code> → represents statements (execution-oriented)</li>
+      </ul>
+
+      This separation improves:
+      <ul>
+        <li>Type safety (compile-time validation)</li>
+        <li>Code clarity and maintainability</li>
+        <li>Clear separation of responsibilities</li>
+      </ul>
+
+      <br>
+
+      <strong>Base Class</strong>
+      <pre><code>abstract class Stmt {}</code></pre>
+
+      The AST generator is extended to include statements, producing specific subclasses such as print and expression statements.
+    </p>
+  </div>
+</section>
+
+<section class="doc-section" id="dn-stmt-3">
+  <span class="doc-tag">Dev Notes / variables</span>
+  <h2>Variables &amp; Declarations</h2>
+  <p><!-- TODO: explain variable handling --></p>
+
+  <div class="callout">
+    <span class="callout-label">Design note</span>
+    <p>
+      <strong>Variable Declaration</strong><br>
+      A variable declaration introduces a new binding between a name and a value.
+
+      <pre><code>var beverage = "espresso";</code></pre>
+
+      <br>
+
+      <strong>Variable Access</strong><br>
+      A variable expression retrieves the value associated with a name.
+
+      <pre><code>print beverage;</code></pre>
+
+      <br>
+
+      <strong>Grammar</strong>
+      <pre><code>
+program      → declaration* EOF ;
+
+declaration  → varDecl
+             | statement ;
+
+varDecl      → "var" IDENTIFIER ( "=" expression )? ";" ;
+
+primary      → IDENTIFIER | ... ;
+      </code></pre>
+
+      <br>
+
+      If no initializer is provided, the variable is assigned a default value (<code>nil</code>).
+
+      Accessing a variable before it is defined results in a runtime error.
+    </p>
+  </div>
+</section>
+
+<section class="doc-section" id="dn-stmt-4">
+  <span class="doc-tag">Dev Notes / environment</span>
+  <h2>Environment &amp; Variable Storage</h2>
+  <p><!-- TODO: explain environment structure --></p>
+
+  <div class="callout">
+    <span class="callout-label">Design note</span>
+    <p>
+      Variable bindings are stored in a structure called an <strong>environment</strong>.
+
+      Internally, this behaves like a map:
+      <ul>
+        <li>Keys → variable names</li>
+        <li>Values → runtime values</li>
+      </ul>
+
+      The interpreter maintains an environment instance to store variables during execution.
+
+      <pre><code>
+private Environment environment = new Environment();
+      </code></pre>
+
+      <br>
+
+      Operations supported:
+      <ul>
+        <li>Define a variable</li>
+        <li>Retrieve a variable’s value</li>
+        <li>Update an existing variable</li>
+      </ul>
+
+      This structure allows variables to persist throughout program execution.
+    </p>
+  </div>
+</section>
+
+<section class="doc-section" id="dn-stmt-5">
+  <span class="doc-tag">Dev Notes / assignment</span>
+  <h2>Assignment</h2>
+  <p><!-- TODO: explain assignment semantics --></p>
+
+  <div class="callout">
+    <span class="callout-label">Design note</span>
+    <p>
+      Assignment allows updating the value of an existing variable.
+
+      <pre><code>a = 2;</code></pre>
+
+      <br>
+
+      In this language, assignment is an <strong>expression</strong>, not a statement. It has the lowest precedence and is
+      right-associative.
+
+      <pre><code>
+expression → assignment ;
+
+assignment → IDENTIFIER "=" assignment
+           | equality ;
+      </code></pre>
+
+      <br>
+
+      <strong>Key Concept</strong>
+      <ul>
+        <li><strong>l-value:</strong> location being assigned to</li>
+        <li><strong>r-value:</strong> value being assigned</li>
+      </ul>
+
+      Only valid assignment targets (like variables) are allowed. Invalid targets result in a syntax error.
+
+      Assignment expressions return the assigned value, allowing chaining:
+
+      <pre><code>print a = 2; // prints 2</code></pre>
+    </p>
+  </div>
+</section>
+
+<section class="doc-section" id="dn-stmt-6">
+  <span class="doc-tag">Dev Notes / scope</span>
+  <h2>Scope &amp; Block Execution</h2>
+  <p><!-- TODO: explain scope and block handling --></p>
+
+  <div class="callout">
+    <span class="callout-label">Design note</span>
+    <p>
+      A <strong>scope</strong> defines where a variable is accessible.
+
+      This language uses <strong>lexical scope</strong>, meaning variable resolution is determined by the structure of the
+      code.
+
+      <br><br>
+
+      <strong>Block Scope</strong>
+      <pre><code>
+{
+  var a = "inside";
+}
+print a; // Error
+      </code></pre>
+
+      Variables declared inside a block are only accessible within that block.
+
+      <br><br>
+
+      <strong>Nested Scope &amp; Shadowing</strong>
+      <pre><code>
+var a = "global";
+{
+  var a = "local";
+  print a; // local
+}
+print a; // global
+      </code></pre>
+
+      Inner variables can <strong>shadow</strong> outer variables without modifying them.
+
+      <br><br>
+
+      <strong>Environment Chaining</strong><br>
+      Each block creates a new environment linked to its enclosing one.
+
+      Variable lookup proceeds from:
+      <ul>
+        <li>Current (innermost) scope</li>
+        <li>Outward through enclosing scopes</li>
+      </ul>
+
+      This ensures correct resolution of both local and global variables.
+
+      <br><br>
+
+      <strong>Block Grammar</strong>
+      <pre><code>
+statement → exprStmt
+          | printStmt
+          | block ;
+
+block     → "{" declaration* "}" ;
+      </code></pre>
+    </p>
+  </div>
+</section>
+      </section>
+
+<section class="doc-section " id="dn-cf">
+  <section class="doc-section" id="dn-control-1">
+  <span class="doc-tag">Dev Notes / control-flow</span>
+  <h2>Control Flow Overview</h2>
+  <p><!-- TODO: explain control flow model --></p>
+
+  <div class="callout">
+    <span class="callout-label">Design note</span>
+    <p>
+      Any sufficiently expressive programming language is capable of performing arbitrary computation. This idea is
+      formalized through models like Turing machines and lambda calculus.
+
+      <br><br>
+
+      In practice, control flow determines how a program executes. It can be broadly divided into:
+
+      <ul>
+        <li><strong>Conditional flow:</strong> executes code selectively</li>
+        <li><strong>Looping flow:</strong> repeats execution of code</li>
+      </ul>
+
+      These constructs allow programs to make decisions and perform repeated computations. :contentReference[oaicite:0]{index=0}
+    </p>
+  </div>
+</section>
+
+<section class="doc-section" id="dn-control-2">
+  <span class="doc-tag">Dev Notes / conditional</span>
+  <h2>Conditional Execution</h2>
+  <p><!-- TODO: explain if statement behavior --></p>
+
+  <div class="callout">
+    <span class="callout-label">Design note</span>
+    <p>
+      The <code>if</code> statement enables conditional execution based on a boolean expression.
+
+      <pre><code>
+statement → exprStmt
+          | ifStmt
+          | printStmt
+          | block ;
+
+ifStmt    → "if" "(" expression ")" statement
+           ( "else" statement )? ;
+      </code></pre>
+
+      <br>
+
+      <strong>Behavior</strong>
+      <ul>
+        <li>If the condition is truthy → execute the first statement</li>
+        <li>If falsey and <code>else</code> exists → execute the alternative statement</li>
+      </ul>
+
+      <br>
+
+      <strong>Dangling Else Problem</strong><br>
+      When nested <code>if</code> statements omit braces, it can be unclear which <code>if</code> an <code>else</code>
+      belongs to. This ambiguity is resolved by associating the <code>else</code> with the nearest preceding
+      <code>if</code>.
+    </p>
+  </div>
+</section>
+
+<section class="doc-section" id="dn-control-3">
+  <span class="doc-tag">Dev Notes / logical</span>
+  <h2>Logical Operators</h2>
+  <p><!-- TODO: explain logical short-circuiting --></p>
+
+  <div class="callout">
+    <span class="callout-label">Design note</span>
+    <p>
+      Logical operators <code>and</code> and <code>or</code> are also control flow constructs, as they determine whether
+      expressions are evaluated.
+
+      <pre><code>
+expression → assignment ;
+assignment → IDENTIFIER "=" assignment
+           | logic_or ;
+
+logic_or   → logic_and ( "or" logic_and )* ;
+logic_and  → equality ( "and" equality )* ;
+      </code></pre>
+
+      <br>
+
+      These operators typically use <strong>short-circuit evaluation</strong>:
+      <ul>
+        <li><code>or</code> stops when a truthy value is found</li>
+        <li><code>and</code> stops when a falsey value is found</li>
+      </ul>
+    </p>
+  </div>
+</section>
+
+<section class="doc-section" id="dn-control-4">
+  <span class="doc-tag">Dev Notes / loops</span>
+  <h2>While Loop</h2>
+  <p><!-- TODO: explain loop execution --></p>
+
+  <div class="callout">
+    <span class="callout-label">Design note</span>
+    <p>
+      The <code>while</code> loop repeatedly executes a statement as long as its condition remains truthy.
+
+      <pre><code>
+statement  → exprStmt
+           | ifStmt
+           | printStmt
+           | whileStmt
+           | block ;
+
+whileStmt  → "while" "(" expression ")" statement ;
+      </code></pre>
+
+      <br>
+
+      <strong>Behavior</strong>
+      <ul>
+        <li>Evaluate condition</li>
+        <li>If truthy → execute body</li>
+        <li>Repeat until condition becomes false</li>
+      </ul>
+    </p>
+  </div>
+</section>
+
+<section class="doc-section" id="dn-control-5">
+  <span class="doc-tag">Dev Notes / for-loop</span>
+  <h2>For Loop</h2>
+  <p><!-- TODO: explain for loop desugaring --></p>
+
+  <div class="callout">
+    <span class="callout-label">Design note</span>
+    <p>
+      The <code>for</code> loop provides a compact way to write iteration logic.
+
+      <pre><code>
+forStmt → "for" "(" ( varDecl | exprStmt | ";" )
+          expression? ";"
+          expression? ")" statement ;
+      </code></pre>
+
+      <br>
+
+      A <code>for</code> loop consists of three parts:
+
+      <ul>
+        <li><strong>Initializer:</strong> runs once before the loop starts</li>
+        <li><strong>Condition:</strong> checked before each iteration</li>
+        <li><strong>Increment:</strong> executed after each iteration</li>
+      </ul>
+
+      <br>
+
+      Example:
+      <pre><code>for (var i = 0; i &lt; 10; i = i + 1) print i;</code></pre>
+
+      <br>
+
+      Internally, a <code>for</code> loop can be transformed into an equivalent <code>while</code> loop, making it a
+      higher-level construct built on top of simpler control flow.
+    </p>
+  </div>
+</section>
+</section>
+<!-- tesssssssssssssssssssss-->
+<section class="doc-section " id="dn-fn">
+  <section class="doc-section" id="dn-fn-1">
+  <span class="doc-tag">Dev Notes / functions</span>
+  <h2>Function Calls</h2>
+  <p><!-- TODO: explain function call evaluation --></p>
+
+  <div class="callout">
+    <span class="callout-label">Design note</span>
+    <p>
+      A function call evaluates a <strong>callee</strong> expression and invokes it with arguments.
+
+      <pre><code>callee(arguments);</code></pre>
+
+      The callee is not limited to identifiers—it can be any expression that evaluates to a callable object.
+
+      <br><br>
+
+      <strong>Grammar</strong>
+      <pre><code>
+unary → ( "!" | "-" ) unary | call ;
+call  → primary ( "(" arguments? ")" )* ;
+      </code></pre>
+
+      This allows chained calls such as:
+      <pre><code>fn(1)(2)(3);</code></pre>
+
+      <br>
+
+      <strong>Evaluation Process</strong>
+      <ul>
+        <li>Evaluate the callee expression</li>
+        <li>Evaluate each argument (left to right)</li>
+        <li>Invoke the callable with evaluated arguments</li>
+      </ul>
+
+      <br>
+
+      Callable objects implement a common interface (e.g., <code>LoxCallable</code>) which defines how calls are executed.
+      :contentReference[oaicite:0]{index=0}
+    </p>
+  </div>
+</section>
+
+<section class="doc-section" id="dn-fn-2">
+  <span class="doc-tag">Dev Notes / call-errors</span>
+  <h2>Call Errors &amp; Arity</h2>
+  <p><!-- TODO: explain call validation --></p>
+
+  <div class="callout">
+    <span class="callout-label">Design note</span>
+    <p>
+      Function calls must be validated before execution.
+
+      <br><br>
+
+      <strong>Invalid Call Targets</strong><br>
+      If the callee is not callable, a runtime error is raised:
+
+      <pre><code>"not a function"();</code></pre>
+
+      <br>
+
+      <strong>Arity Checking</strong><br>
+      Each function defines an <strong>arity</strong> (number of expected arguments).
+
+      <pre><code>
+fun add(a, b, c) {
+  print a + b + c;
+}
+      </code></pre>
+
+      Calling with incorrect argument count results in an error:
+
+      <pre><code>
+add(1, 2);       // too few
+add(1, 2, 3, 4); // too many
+      </code></pre>
+
+      <br>
+
+      The interpreter validates argument count before invocation to ensure correctness.
+    </p>
+  </div>
+</section>
+
+<section class="doc-section" id="dn-fn-3">
+  <span class="doc-tag">Dev Notes / native</span>
+  <h2>Native Functions</h2>
+  <p><!-- TODO: explain native functions --></p>
+
+  <div class="callout">
+    <span class="callout-label">Design note</span>
+    <p>
+      Native functions are implemented in the host language but exposed to user programs.
+
+      They are useful for:
+      <ul>
+        <li>Accessing system features (time, IO, etc.)</li>
+        <li>Providing built-in functionality</li>
+      </ul>
+
+      <br>
+
+      Example:
+      <pre><code>clock();</code></pre>
+
+      This function returns the current time, allowing programs to measure execution duration.
+
+      <br><br>
+
+      Native functions are part of the runtime and are typically registered in the global environment.
+    </p>
+  </div>
+</section>
+
+<section class="doc-section" id="dn-fn-4">
+  <span class="doc-tag">Dev Notes / declaration</span>
+  <h2>Function Declarations</h2>
+  <p><!-- TODO: explain function definition --></p>
+
+  <div class="callout">
+    <span class="callout-label">Design note</span>
+    <p>
+      Functions are declared using the <code>fun</code> keyword.
+
+      <pre><code>
+declaration → funDecl
+            | varDecl
+            | statement ;
+
+funDecl     → "fun" function ;
+function    → IDENTIFIER "(" parameters? ")" block ;
+      </code></pre>
+
+      <br>
+
+      A function declaration:
+      <ul>
+        <li>Binds a name to a callable object</li>
+        <li>Defines parameters and a body</li>
+      </ul>
+    </p>
+  </div>
+</section>
+
+<section class="doc-section" id="dn-fn-5">
+  <span class="doc-tag">Dev Notes / return</span>
+  <h2>Return Statements</h2>
+  <p><!-- TODO: explain return behavior --></p>
+
+  <div class="callout">
+    <span class="callout-label">Design note</span>
+    <p>
+      A <code>return</code> statement exits a function and optionally provides a value.
+
+      <pre><code>return expression;</code></pre>
+
+      If no value is provided, the function returns <code>nil</code>.
+
+      <br><br>
+
+      <strong>Execution Behavior</strong><br>
+      Return statements may appear inside nested constructs, but they must immediately exit the entire function.
+
+      To implement this, the interpreter uses a controlled mechanism (such as exceptions) to unwind execution until the
+      function boundary is reached.
+
+      <br><br>
+
+      This ensures:
+      <ul>
+        <li>Immediate function exit</li>
+        <li>Correct value propagation</li>
+        <li>Consistent execution behavior</li>
+      </ul>
+    </p>
+  </div>
+</section>
+</section>
+
+
+      <section class="doc-section" id="dn-eval-1">
+        <span class="doc-tag">Dev Notes / eavluation</span>
+        <h2>Evaluate expressions</h2>
+        <p><!-- TODO: how your interpreter handles lexical scope, variable resolution --></p>
+
+        <div class="callout">
+          <span class="callout-label">Design note</span>
+          <p>
+            To evaluate expressions, the interpreter needs executable logic associated with each type of syntax node.
+            One
+            possible design is to embed this logic directly into the syntax tree classes using a method like
+            <code>interpret()</code>, allowing each node to evaluate itself.
+
+            This approach is similar to how the <code>AstPrinter</code> works. That class traverses the syntax tree
+            recursively
+            and builds a string representation. An interpreter follows the same traversal pattern, but instead of
+            producing
+            strings, it computes and returns runtime values.
+
+            <br><br>
+
+            <strong>Evaluating Literals</strong><br>
+            Literals are the most basic building blocks of expressions. They represent fixed values written directly in
+            the
+            source code.
+
+          <ul>
+            <li>A literal is a piece of syntax that produces a value.</li>
+            <li>It always originates from the user’s source code.</li>
+            <li>It belongs to the parser’s domain, not the runtime.</li>
+          </ul>
+
+          While literals resemble values, the distinction is important: a literal is syntax, whereas a value exists at
+          runtime. During evaluation, the interpreter converts literal syntax tree nodes into actual runtime values.
+          This
+          step is straightforward since literals directly map to their corresponding values.
+
+          <br><br>
+
+          <strong>Evaluating Parentheses (Grouping)</strong><br>
+          Grouping expressions—created using parentheses—are evaluated by first evaluating the enclosed expression and
+          then
+          returning its result. The grouping itself does not introduce new computation; it only controls evaluation
+          order.
+
+          <br><br>
+
+          <strong>Evaluating Unary Expressions</strong><br>
+          Unary expressions operate on a single operand. The interpreter first evaluates the operand and then applies
+          the
+          operator.
+
+          This evaluation follows a <strong>post-order traversal</strong>:
+          <ul>
+            <li>First evaluate child expressions</li>
+            <li>Then apply the operator at the current node</li>
+          </ul>
+
+          This recursive strategy ensures that all required values are computed before an operation is performed.
+          </p>
+        </div>
+      </section>
+
+      <section class="doc-section" id="dn-eval-2">
+        <span class="doc-tag">Dev Notes / Runtime error</span>
+        <h2>Runtime error logic</h2>
+        <p><!-- TODO: how your interpreter handles lexical scope, variable resolution --></p>
+
+        <div class="callout">
+          <span class="callout-label">Design note</span>
+          <p>
+            <strong>Runtime Errors</strong><br>
+            During evaluation, expressions may produce values of unexpected types. For example, attempting to perform
+            numeric
+            operations on a string leads to invalid behavior.
+
+            In a naive implementation, such mismatches result in runtime crashes—for example, a
+            <code>ClassCastException</code> in Java—which terminates the interpreter and prints an internal stack trace.
+            This
+            is undesirable for a user-facing language.
+
+            Consider the expression:
+          <pre><code>2 * (3 / -"muffin")</code></pre>
+
+          The unary <code>-</code> operator cannot be applied to a string. This error occurs deep within the expression,
+          making the entire computation invalid. As a result:
+          <ul>
+            <li>The unary operation fails</li>
+            <li>The division cannot proceed</li>
+            <li>The multiplication also becomes invalid</li>
+          </ul>
+
+          Instead of terminating the entire interpreter, runtime errors should:
+          <ul>
+            <li>Stop evaluation of the current expression</li>
+            <li>Report a meaningful error to the user</li>
+            <li>Allow the interpreter to continue running</li>
+          </ul>
+
+          <br>
+
+          <strong>Detecting Runtime Errors</strong><br>
+          Since the interpreter evaluates expressions recursively, an error occurring deep in the evaluation stack must
+          propagate outward.
+
+          The preferred approach is to use controlled exception handling:
+          <ul>
+            <li>Throw a custom runtime error when an invalid operation is detected</li>
+            <li>Include source-level information (such as the token) in the error</li>
+            <li>Catch the error at a higher level to prevent interpreter termination</li>
+          </ul>
+
+          Unlike generic system exceptions, custom runtime errors provide clear and relevant feedback, helping users
+          locate
+          and fix issues in their code effectively.
+          </p>
+        </div>
+      </section>
+
+
+
+
+
+      <!-- ════ DEV NOTES — Variables ════ -->
+      <section class="doc-section" id="dn-variables-scope">
+        <span class="doc-tag">Dev Notes / Variables</span>
+        <h2>Scope &amp; Binding</h2>
+        <p><!-- TODO: how your interpreter handles lexical scope, variable resolution --></p>
+        <div class="callout">
+          <span class="callout-label">Design note</span>
+          <p><!-- TODO: a specific decision you made here and why --></p>
+        </div>
+      </section>
+
+      <section class="doc-section" id="dn-variables-env">
+        <h3>Environment Chain</h3>
+        <p><!-- TODO: how you implement environments / scopes as linked structures --></p>
+        <div class="code-block">
+          <code><span class="code-comment">// TODO: pseudocode or real code showing your env structure</span></code>
+        </div>
+      </section>
+
+      <!-- ════ DEV NOTES — Functions ════ -->
+      <section class="doc-section" id="dn-functions-call">
+        <span class="doc-tag">Dev Notes / Functions</span>
+        <h2>Call Stack</h2>
+        <p><!-- TODO: how function calls work internally --></p>
+
+      </section>
+
+      <section class="doc-section" id="dn-functions-closure">
+        <h3>Closures</h3>
+        <p><!-- TODO: how closures capture their environment --></p>
+        <div class="callout">
+          <span class="callout-label">Design note</span>
+          <p><!-- TODO: interesting closure design decision --></p>
+        </div>
+      </section>
+
+      <section class="doc-section" id="dn-functions-native">
+        <h3>Native Functions</h3>
+        <p><!-- TODO: how you bridge built-in functions --></p>
+      </section>
+
+      <!-- ════ DEV NOTES — Classes ════ -->
+      <section class="doc-section" id="dn-classes-instance">
+        <span class="doc-tag">Dev Notes / Classes</span>
+        <h2>Instances &amp; Fields</h2>
+        <p><!-- TODO: how class instances store fields --></p>
+      </section>
+
+      <section class="doc-section" id="dn-classes-inherit">
+        <h3>Inheritance</h3>
+        <p><!-- TODO: how method lookup / super works --></p>
+        <div class="callout">
+          <span class="callout-label">Design note</span>
+          <p><!-- TODO: inheritance design note --></p>
+        </div>
+      </section>
+
+      <!-- ════ DEV NOTES — Types ════ -->
+      <section class="doc-section" id="dn-types-repr">
+        <span class="doc-tag">Dev Notes / Types &amp; Values</span>
+        <h2>Internal Representation</h2>
+        <p><!-- TODO: how values are represented in memory -- tagged unions, structs, etc --></p>
+      </section>
+
+      <section class="doc-section" id="dn-types-coercion">
+        <h3>Coercion Rules</h3>
+        <p><!-- TODO: when/how types are implicitly converted --></p>
+      </section>
+
+      <!-- ════ DEV NOTES — Memory ════ -->
+      <section class="doc-section" id="dn-gc-alloc">
+        <span class="doc-tag">Dev Notes / Memory &amp; GC</span>
+        <h2>Allocation</h2>
+        <p><!-- TODO: how objects are allocated --></p>
+      </section>
+
+      <section class="doc-section" id="dn-gc-collect">
+        <h3>Collection</h3>
+        <p><!-- TODO: GC strategy — mark-and-sweep, reference counting, etc --></p>
+        <div class="callout">
+          <span class="callout-label">Design note</span>
+          <p><!-- TODO: why you chose this GC approach --></p>
+        </div>
+      </section>
+
+      <!-- ════ DEV NOTES — Errors ════ -->
+      <section class="doc-section" id="dn-errors-parse">
+        <span class="doc-tag">Dev Notes / Error Handling</span>
+        <h2>Parse Errors</h2>
+        <p><!-- TODO: how your parser reports and recovers from errors --></p>
+      </section>
+
+      <section class="doc-section" id="dn-errors-runtime">
+        <h3>Runtime Errors</h3>
+        <p><!-- TODO: how runtime errors are surfaced --></p>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ── Footer ── -->
+  <footer class="site-footer" style="margin-left: var(--sidebar-w);">
+    <span>© 2025 <!-- your name --></span>
+    <span><a href="https://github.com/" target="_blank">GitHub</a></span>
+  </footer>
+
+  <script>
+    // ── Active sidebar link on scroll ──
+    const sections = document.querySelectorAll('.doc-section[id]');
+    const links = document.querySelectorAll('.sidebar-link:not(.sidebar-toggle)');
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          links.forEach(l => l.classList.remove('active'));
+          const match = document.querySelector(`.sidebar-link[href="#${e.target.id}"]`);
+          if (match) match.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+
+    sections.forEach(s => observer.observe(s));
+
+    // ── Collapsible dev-note toggles ──
+    document.querySelectorAll('.sidebar-toggle').forEach(toggle => {
+      toggle.addEventListener('click', e => {
+        e.preventDefault();
+        const targetId = toggle.dataset.target;
+        const sub = document.getElementById(targetId);
+        const isOpen = sub.classList.contains('open');
+        sub.classList.toggle('open', !isOpen);
+        toggle.classList.toggle('open', !isOpen);
+      });
+    });
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Download — YourInterpreter</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ── Nav ── -->
+  <nav class="site-nav">
+    <a href="index.html" class="brand">Sun<span>lang</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="docs.html">Docs</a></li>
+      <li><a href="download.html" class="active">Download</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="https://github.com/" target="_blank">GitHub</a></li>
+    </ul>
+  </nav>
+
+  <!-- ── Download Hero ── -->
+  <section class="download-hero pt-nav">
+
+    <p class="section-label">Download</p>
+    <h1 style="font-family:var(--mono); font-size:clamp(1.8rem,4vw,3rem); font-weight:600; margin-bottom:0.75rem;">
+      Get YourLang
+    </h1>
+    <p style="font-size:0.92rem; color:var(--text-muted); margin-bottom:0; max-width:480px; line-height:1.75;">
+      <!-- TODO: current version and a single line description -->
+      Version 1.0.0 &mdash; [TODO: one sentence about the release]
+    </p>
+
+    <!-- ── Platform cards ── -->
+    <div class="download-grid">
+
+      <div class="dl-card">
+        <p class="dl-os">Linux</p>
+        <h4>yourlang-linux-x86_64</h4>
+        <p><!-- TODO: binary format, libc requirement, etc. --> ELF 64-bit · glibc 2.17+</p>
+        <a href="#" class="btn-primary-custom" download>
+          ↓ &nbsp; Download (.tar.gz)
+        </a>
+      </div>
+
+      <div class="dl-card">
+        <p class="dl-os">macOS</p>
+        <h4>yourlang-macos-arm64</h4>
+        <p><!-- TODO --> Universal binary · macOS 12+</p>
+        <a href="#" class="btn-primary-custom" download>
+          ↓ &nbsp; Download (.tar.gz)
+        </a>
+      </div>
+
+      <div class="dl-card">
+        <p class="dl-os">Windows</p>
+        <h4>yourlang-windows-x64</h4>
+        <p><!-- TODO --> 64-bit · Windows 10+</p>
+        <a href="#" class="btn-primary-custom" download>
+          ↓ &nbsp; Download (.zip)
+        </a>
+      </div>
+
+      <div class="dl-card">
+        <p class="dl-os">Source</p>
+        <h4>Build from source</h4>
+        <p>Clone the repo and compile it yourself. A Makefile is provided.</p>
+        <a href="https://github.com/" target="_blank" class="btn-primary-custom">
+          View on GitHub ↗
+        </a>
+      </div>
+
+    </div>
+
+    <p class="dl-note">
+      Checksums for each binary are available in
+      <a href="#">SHA256SUMS.txt</a>.
+      If you encounter any issues, please
+      <a href="https://github.com/" target="_blank">open an issue on GitHub</a>.
+    </p>
+
+  </section>
+
+  <!-- ── Footer ── -->
+  <footer class="site-footer">
+    <span>© 2025 <!-- your name --></span>
+    <span><a href="https://github.com/" target="_blank">GitHub</a></span>
+  </footer>
+
+</body>
+</html>
