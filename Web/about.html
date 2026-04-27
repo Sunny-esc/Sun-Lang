@@ -16,55 +16,82 @@
       <li><a href="docs.html">Docs</a></li>
       <li><a href="download.html">Download</a></li>
       <li><a href="about.html" class="active">About</a></li>
-      <li><a href="https://github.com/" target="_blank">GitHub</a></li>
+      <li><a href="https://github.com/sunny-esc" target="_blank">GitHub</a></li>
     </ul>
   </nav>
 
-  <main class="pt-nav about-wrap">
 
-    <span class="section-label">About</span>
-    <h1>The project</h1>
+   <main class="pt-nav about-wrap">
 
-    <p>
-      <!-- TODO: why you built this interpreter -->
-      [Tell the story of why you built this. What problem were you solving? What did you want to learn?]
-    </p>
+  <span class="section-label">About</span>
+  <h1>The project</h1>
 
-    <p>
-      <!-- TODO: what you learned -->
-      [What did building this teach you about language design, parsing, evaluation?]
-    </p>
+  <p>
+    This project began as an attempt to go beyond just using programming languages
+    and actually understand how they work under the hood. Instead of treating a
+    language as a black box, the goal was to build one from scratch—starting from
+    raw source code and turning it into something executable.
+    
+    The interpreter is inspired by the ideas in the book 
+    <span class="code-str">"Crafting Interpreters"</span>, but the implementation
+    is adapted, refined, and extended as part of a personal learning journey.
+    The focus was not only to make a working language, but to deeply understand
+    each stage involved in language design.
+  </p>
 
-    <h2>Implementation</h2>
-    <p>
-      <!-- TODO: language it's written in, architecture overview -->
-      YourLang is written in [language]. The interpreter is structured as a classic
-      pipeline: scanner → parser → resolver → evaluator.
-    </p>
-    <p>
-      <!-- TODO: any non-obvious choices -->
-      [Any interesting choices you made? e.g. handwritten recursive-descent parser, environment-chain scoping, etc.]
-    </p>
+  <p>
+    Building this interpreter provided hands-on experience with core concepts of
+    programming languages. It helped in understanding how lexical analysis breaks
+    code into tokens, how parsing constructs a structured representation of the
+    program, and how evaluation executes that structure step by step.
+    
+    Beyond the technical pipeline, the project also highlighted important design
+    decisions—such as how scoping works, how functions and classes behave as
+    first-class values, and how object-oriented features like inheritance and
+    dynamic fields can be implemented in a simple yet flexible way.
+  </p>
+
+  <h2>Implementation</h2>
+  <p>
+    The interpreter is written in Java and follows a classic architecture:
+    scanner → parser → resolver → evaluator. The scanner converts source code
+    into tokens, the parser builds an abstract syntax tree (AST), the resolver
+    performs static analysis for scope and variable binding, and the evaluator
+    walks the AST to execute the program.
+  </p>
+
+  <p>
+    A handwritten recursive-descent parser is used to keep the implementation
+    simple and readable while still being powerful enough to handle the full
+    grammar of the language. Variable scope is managed using an environment chain,
+    allowing nested blocks and closures to work naturally.
+    
+    The language supports first-class functions and classes, dynamic field
+    assignment, and single inheritance with method resolution through the
+    superclass chain. Features like <code>this</code> and <code>super</code> are
+    implemented to enable object-oriented behavior without introducing unnecessary
+    complexity.
+  </p>
 
     <h2>Influences</h2>
     <p>
       <!-- TODO: books, projects, or people that influenced your work -->
-      [e.g. "Heavily influenced by <em>Crafting Interpreters</em> by Robert Nystrom, though the implementation diverges significantly in…"]
+      Heavily influenced by <em>Crafting Interpreters</em> by Robert Nystrom, though the implementation diverges significantly in…
     </p>
 
     <h2>Author</h2>
     <p>
       <!-- TODO: your name, links -->
-      Built by <a href="https://github.com/" target="_blank" style="color:var(--accent); text-decoration:none;">Your Name</a>.
-      Feel free to reach out or open issues on <a href="https://github.com/" target="_blank" style="color:var(--accent); text-decoration:none;">GitHub</a>.
+      Built by <a href="https://github.com/sunny-esc" target="_blank" style="color:var(--accent); text-decoration:none;">Sunny</a>.
+      Feel free to reach out or open issues on <a href="https://github.com/sunny-esc/Sun-Lang" target="_blank" style="color:var(--accent); text-decoration:none;">GitHub</a>.
     </p>
 
   </main>
 
   <!-- ── Footer ── -->
   <footer class="site-footer">
-    <span>© 2025 <!-- your name --></span>
-    <span><a href="https://github.com/" target="_blank">GitHub</a></span>
+    <span>© 2026 Sunny</span>
+    <span><a href="https://github.com/sunny-esc" target="_blank">GitHub</a></span>
   </footer>
 
 </body>

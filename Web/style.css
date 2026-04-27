@@ -3,9 +3,9 @@
 
 /* ─── Variables ───────────────────────────────────────── */
 :root {
-  --sidebar-bg:   #3e444d;
+  --sidebar-bg:   #000000;
   --sidebar-w:    280px;
-  --accent:       #8bd2f0;
+  --accent:       #74797c;
   --accent-dim:   #2e6f8e;
   --text-main:    #1a1a1a;
   --text-muted:   #3e4c4c;
@@ -43,7 +43,8 @@ body { font-family: var(--sans); color: var(--text-main); background: var(--bg);
 .nav-links { display: flex; gap: 0.25rem; list-style: none; }
 .nav-links a {
   font-family: var(--mono);
-  font-size: 0.75rem;
+  font-size: 0.9rem;
+  font-weight: 800;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.781);
@@ -170,7 +171,8 @@ body { font-family: var(--sans); color: var(--text-main); background: var(--bg);
 .sidebar-section { margin-bottom: 0.25rem; }
 .sidebar-group-label {
   font-family: var(--mono);
-  font-size: 0.62rem;
+  font-size: 0.8rem;
+  font-weight: 700;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: rgba(251, 249, 249, 0.932);
@@ -260,9 +262,10 @@ body { font-family: var(--sans); color: var(--text-main); background: var(--bg);
 
 /* Callout / note box */
 .callout {
-  background: rgba(74,159,196,0.06);
+  background: rgba(74, 160, 196, 0.402);
   border-left: 3px solid var(--accent);
   padding: 1rem 1.25rem;
+  
   border-radius: 0 4px 4px 0;
   margin: 1.25rem 0;
 }
@@ -272,6 +275,7 @@ body { font-family: var(--sans); color: var(--text-main); background: var(--bg);
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--accent);
+  font-weight: 800;
   margin-bottom: 0.4rem;
   display: block;
 }
@@ -333,7 +337,7 @@ body { font-family: var(--sans); color: var(--text-main); background: var(--bg);
 /* ─── Footer ──────────────────────────────────────────── */
 .site-footer {
   background: var(--sidebar-bg);
-  color: rgba(255,255,255,0.3);
+  color: rgb(255, 255, 255);
   font-family: var(--mono);
   font-size: 0.7rem;
   letter-spacing: 0.08em;

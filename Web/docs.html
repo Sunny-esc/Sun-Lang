@@ -18,7 +18,7 @@
       <li><a href="docs.html" class="active">Docs</a></li>
       <li><a href="download.html">Download</a></li>
       <li><a href="about.html">About</a></li>
-      <li><a href="https://github.com/" target="_blank">GitHub</a></li>
+      <li><a href="https://github.com/sunny-esc" target="_blank">GitHub</a></li>
     </ul>
   </nav>
 
@@ -33,6 +33,8 @@
         <a href="#intro-overview" class="sidebar-link active">Overview</a>
         <a href="#intro-install" class="sidebar-link">Installation</a>
         <a href="#intro-hello" class="sidebar-link">Hello World</a>
+
+
       </div>
 
       <!-- Syntax -->
@@ -42,16 +44,29 @@
         <a href="#syntax-expressions" class="sidebar-link">Expressions</a>
         <a href="#syntax-statements" class="sidebar-link">Statements</a>
         <a href="#syntax-control" class="sidebar-link">Control Flow</a>
+        <a href="#syntax-functions" class="sidebar-link">Functions  </a>
+
+
+        <a class="sidebar-link sidebar-toggle" data-target="sy-class" href="#">
+          Class <span class="chevron">▶</span>
+        </a>
+        <div class="sidebar-sub" id="sy-class">
+          <a href="#sy-inheritance" class="sidebar-link">Inheritance</a>
+          <a href="#sy-class-1" class="sidebar-link">class</a>
+        </div>
+
+
+        <a href="#intro-hello" class="sidebar-link">Hello World</a>
       </div>
 
       <!-- Dev Notes — collapsible -->
-      
+
       <div class="sidebar-section">
         <span class="sidebar-group-label">Dev Notes</span>
         <a href="#dn-parse" class="sidebar-link">Parsing</a>
-                <a href="#dn-stmt" class="sidebar-link">Statments logic</a>
-                <a href="#dn-cf" class="sidebar-link">Control flow logic</a>
-                <a href="#dn-fn" class="sidebar-link">Function logic</a>
+        <a href="#dn-stmt" class="sidebar-link">Statments logic</a>
+        <a href="#dn-cf" class="sidebar-link">Control flow logic</a>
+        <a href="#dn-fn" class="sidebar-link">Function logic</a>
 
         <a class="sidebar-link sidebar-toggle" data-target="dn-eval" href="#">
           Evaluation <span class="chevron">▶</span>
@@ -79,9 +94,9 @@
           <a href="#dn-classes-inherit" class="sidebar-link">Inheritance</a>
         </div>
 
-        
 
-     
+
+
 
         <a class="sidebar-link sidebar-toggle" data-target="dn-errors" href="#">
           Error Handling <span class="chevron">▶</span>
@@ -145,79 +160,123 @@ java Lox.java
 
       <!-- ════ SYNTAX ════ -->
       <section class="doc-section" id="syntax-basics">
-        <span class="doc-tag">Syntax</span>
-        <h2>Basics</h2>
-        <p><!-- TODO: comments, whitespace, identifiers, literals --></p>
-        <div class="code-block"><code><span class="code-comment">// single-line comment</span>
+  <span class="doc-tag">Syntax</span>
+  <h2>Basics</h2>
+  <p>
+    The basic syntax of Sun includes comments, whitespace, identifiers, and literals.
+    Whitespace is ignored and used only for readability. Comments help document code,
+    and literals represent fixed values such as numbers, strings, and booleans.
+  </p>
 
-<span class="code-comment">/* block comment */</span>
+  <div class="code-block"><code>
+// Single-line comment
 
-<span class="code-kw">var</span> x = <span class="code-num">42</span>;
-<span class="code-kw">var</span> name = <span class="code-str">"YourLang"</span>;
-<span class="code-kw">var</span> flag = <span class="code-kw">true</span>;</code></div>
-      </section>
+/* Block comment */
 
-      <section class="doc-section" id="syntax-expressions">
-        <h3>Expressions</h3>
-        <p><!-- TODO: arithmetic, comparison, logical operators --></p>
-        <span class="code-comment">Arithmetic expression </span>
-        <div class="code-block">
-          <code>
-add + me;
-subtract - me;
-multiply * me;
-divide / me;
-        </code>
-        </div>
-        <span class="code-comment">Arithmetic expression </span>
+// Variable declarations with literals
+<span class="code-kw">var</span> x = <span class="code-num">42</span>;              <span class="code-comment">// number</span>
+<span class="code-kw">var</span> name = <span class="code-str">"YourLang"</span>;  <span class="code-comment">// string</span>
+<span class="code-kw">var</span> flag = <span class="code-kw">true</span>;          <span class="code-comment">// boolean</span>
+<span class="code-kw">var</span> nothing = <span class="code-kw">nil</span>;        <span class="code-comment">// null value</span>
+</code></div>
+</section>
 
-        <div class="code-block">
-          <code><span class="code-comment">// TODO: fill in your expression examples</span>
-less < than;
-lessThan <= orEqual;
-greater > than;
-greaterThan >= orEqual;
+    <section class="doc-section" id="syntax-expressions">
+  <h3>Expressions</h3>
+  <p>
+    Expressions produce values.Sun supports arithmetic, comparison, and logical expressions
+    to perform calculations and make decisions in programs.
+  </p>
 
-1 == 2;         // false.
-"cat" != "dog"; // true.
-        </code>
-        </div>
-        <span class="code-comment">Arithmetic expression </span>
+  <span class="code-comment">Arithmetic expressions</span>
+  <div class="code-block"><code>
+<span class="code-num">1</span> + <span class="code-num">2</span>;   <span class="code-comment">// 3</span>
+<span class="code-num">5</span> - <span class="code-num">3</span>;   <span class="code-comment">// 2</span>
+<span class="code-num">4</span> * <span class="code-num">2</span>;   <span class="code-comment">// 8</span>
+<span class="code-num">8</span> / <span class="code-num">2</span>;   <span class="code-comment">// 4</span>
+</code></div>
 
-        <div class="code-block">
-          <code><span class="code-comment">// TODO: fill in your expression examples</span>
-!true;  // false.
-!false; // true.
-false or false; // false.
-true or false;  // true.
-        </code>
-        </div>
-      </section>
+  <span class="code-comment">Comparison expressions</span>
+  <div class="code-block"><code>
+<span class="code-num">3</span> &lt; <span class="code-num">5</span>;    <span class="code-comment">// true</span>
+<span class="code-num">5</span> &lt;= <span class="code-num">5</span>;   <span class="code-comment">// true</span>
+<span class="code-num">7</span> &gt; <span class="code-num">2</span>;    <span class="code-comment">// true</span>
+<span class="code-num">4</span> &gt;= <span class="code-num">6</span>;   <span class="code-comment">// false</span>
 
-      <section class="doc-section" id="syntax-statements">
-        <h3>Statements</h3>
-        <p><!-- TODO: variable declarations, print, blocks, etc --></p>
-        <div class="code-block"><code><span class="code-comment">// TODO: fill in your statement examples</span></code>
-        </div>
-      </section>
-      <section class="doc-section" id="syntax-statements">
-        <h3>Functions</h3>
-        <p><!-- TODO: variable declarations, print, blocks, etc --></p>
-        <div class="code-block"><code>
-          <span class="code-comment">// Functions examples</span>
-fun printSum(a, b) {
+<span class="code-num">1</span> == <span class="code-num">2</span>;         <span class="code-comment">// false</span>
+<span class="code-str">"cat"</span> != <span class="code-str">"dog"</span>; <span class="code-comment">// true</span>
+</code></div>
+
+  <span class="code-comment">Logical expressions</span>
+  <div class="code-block"><code>
+!<span class="code-kw">true</span>;        <span class="code-comment">// false</span>
+!<span class="code-kw">false</span>;       <span class="code-comment">// true</span>
+
+<span class="code-kw">true</span> and <span class="code-kw">false</span>;  <span class="code-comment">// false</span>
+<span class="code-kw">true</span> or <span class="code-kw">false</span>;   <span class="code-comment">// true</span>
+</code></div>
+</section>
+
+    <section class="doc-section" id="syntax-statements">
+  <h3>Statements</h3>
+  <p>
+    Statements perform actions in a program. In Sun, common statements include variable declarations,
+    printing values, expressions, and block statements for grouping multiple operations together.
+  </p>
+
+  <div class="code-block"><code>
+// Variable declaration
+<span class="code-kw">var</span> x = <span class="code-num">10</span>;
+<span class="code-kw">var</span> name = <span class="code-str">"Sunny"</span>;
+
+// Print statement
+print x;
+print name;
+
+// Expression statement
+x = x + <span class="code-num">5</span>;
+
+// Block statement (scope)
+{
+  <span class="code-kw">var</span> y = <span class="code-num">20</span>;
+  print y;
+}
+
+// Conditional statement
+<span class="code-kw">if</span> (x &gt; <span class="code-num">10</span>) {
+  print <span class="code-str">"x is greater than 10"</span>;
+} <span class="code-kw">else</span> {
+  print <span class="code-str">"x is small"</span>;
+}
+</code></div>
+</section>
+
+
+    <section class="doc-section" id="syntax-functions">
+  <h3>Functions</h3>
+  <p>
+    Functions allow you to group reusable logic. In Sun, functions are declared using the
+    <code>fun</code> keyword. They can take parameters, perform operations, and optionally return values.
+  </p>
+
+  <div class="code-block"><code>
+// Function without return value
+<span class="code-kw">fun</span> printSum(a, b) {
   print a + b;
 }
 
-fun returnSum(a, b) {
-  return a + b;
+// Function with return value
+<span class="code-kw">fun</span> returnSum(a, b) {
+  <span class="code-kw">return</span> a + b;
 }
 
-printsum(1,2);
-returnsum(2,3);
-        </code>
-        </div>
-      </section>
+// Calling functions
+printSum(<span class="code-num">1</span>, <span class="code-num">2</span>);
+
+<span class="code-kw">var</span> result = returnSum(<span class="code-num">2</span>, <span class="code-num">3</span>);
+print result;
+</code></div>
+</section>
 
       <section class="doc-section" id="syntax-control">
         <h3>Control Flow</h3>
@@ -239,6 +298,102 @@ for (var a = 1; a < 10; a = a + 1) {
 
         </div>
       </section>
+<section class="doc-section" id="sy-class">
+  <section class="doc-section" id="sy-class-1">
+    <h3>Class</h3>
+    <p>
+      A class defines a blueprint for creating objects by bundling behavior (methods) and state (fields).
+      In Sun, classes are first-class values, meaning they can be stored in variables, passed to functions,
+      and invoked like functions to create instances.
+    </p>
+
+    <div class="code-block"><code>
+<span class="code-kw">class</span> Breakfast {
+  cook() {
+    print <span class="code-str">"Eggs a-fryin'!"</span>;
+  }
+
+  serve(who) {
+    print <span class="code-str">"Enjoy your breakfast, "</span> + who + <span class="code-str">"."</span>;
+  }
+}
+
+// Classes are first-class values
+<span class="code-kw">var</span> someVariable = Breakfast;
+someFunction(Breakfast);
+
+// Creating an instance
+<span class="code-kw">var</span> breakfast = Breakfast();
+print breakfast; <span class="code-comment">// "Breakfast instance".</span>
+
+// Adding fields dynamically
+breakfast.meat = <span class="code-str">"sausage"</span>;
+breakfast.bread = <span class="code-str">"sourdough"</span>;
+
+// Using 'this' inside methods
+<span class="code-kw">class</span> Breakfast {
+  serve(who) {
+    print <span class="code-str">"Enjoy your "</span> + this.meat + <span class="code-str">" and "</span> +
+          this.bread + <span class="code-str">", "</span> + who + <span class="code-str">"."</span>;
+  }
+}
+
+// Initializer (constructor)
+<span class="code-kw">class</span> Breakfast {
+  init(meat, bread) {
+    this.meat = meat;
+    this.bread = bread;
+  }
+}
+
+<span class="code-kw">var</span> baconAndToast = Breakfast(<span class="code-str">"bacon"</span>, <span class="code-str">"toast"</span>);
+baconAndToast.serve(<span class="code-str">"Dear Reader"</span>);
+// "Enjoy your bacon and toast, Dear Reader."
+</code></div>
+  </section>
+</section>
+
+
+
+
+
+<section class="doc-section" id="sy-inheritance">
+  <section class="doc-section" id="sy-inheritance-1">
+    <h3>Inheritance</h3>
+    <p>
+      Inheritance allows a class to reuse behavior from another class. In Sun, a subclass is defined using
+      the &lt; operator, where the subclass inherits all methods from its superclass. This enables code reuse
+      and extension of existing behavior.
+    </p>
+
+    <div class="code-block"><code>
+<span class="code-kw">class</span> Brunch &lt; Breakfast {
+  drink() {
+    print <span class="code-str">"How about a Bloody Mary?"</span>;
+  }
+}
+
+// Creating an instance of subclass
+<span class="code-kw">var</span> benedict = Brunch(<span class="code-str">"ham"</span>, <span class="code-str">"English muffin"</span>);
+benedict.serve(<span class="code-str">"Noble Reader"</span>);
+
+// Using super to call superclass methods
+<span class="code-kw">class</span> Brunch &lt; Breakfast {
+  init(meat, bread, drink) {
+    super.init(meat, bread);
+    this.drink = drink;
+  }
+}
+</code></div>
+  </section>
+</section>
+
+
+
+
+
+
+
 
       <hr class="thin" />
 
@@ -445,30 +600,31 @@ for (var a = 1; a < 10; a = a + 1) {
 
       <section class="doc-section" id="dn-stmt">
         <section class="doc-section" id="dn-stmt-1">
-  <span class="doc-tag">Dev Notes / statements</span>
-  <h2>Statements &amp; Expressions</h2>
-  <p><!-- TODO: explain statement execution model --></p>
+          <span class="doc-tag">Dev Notes / statements</span>
+          <h2>Statements &amp; Expressions</h2>
+          <p><!-- TODO: explain statement execution model --></p>
 
-  <div class="callout">
-    <span class="callout-label">Design note</span>
-    <p>
-      <strong>Expression Statements</strong><br>
-      An expression statement allows an expression to appear where a statement is expected. These are primarily used
-      when evaluating expressions that produce side effects, such as function calls.
+          <div class="callout">
+            <span class="callout-label">Design note</span>
+            <p>
+              <strong>Expression Statements</strong><br>
+              An expression statement allows an expression to appear where a statement is expected. These are primarily
+              used
+              when evaluating expressions that produce side effects, such as function calls.
 
-      <pre><code>someFunction();</code></pre>
+            <pre><code>someFunction();</code></pre>
 
-      <br>
+            <br>
 
-      <strong>Print Statements</strong><br>
-      A <code>print</code> statement evaluates an expression and displays its result to the user.
+            <strong>Print Statements</strong><br>
+            A <code>print</code> statement evaluates an expression and displays its result to the user.
 
-      <pre><code>print 2 + 1;</code></pre>
+            <pre><code>print 2 + 1;</code></pre>
 
-      <br>
+            <br>
 
-      <strong>Grammar</strong>
-      <pre><code>
+            <strong>Grammar</strong>
+            <pre><code>
 program   → statement* EOF ;
 
 statement → exprStmt
@@ -478,75 +634,76 @@ exprStmt  → expression ";" ;
 printStmt → "print" expression ";" ;
       </code></pre>
 
-      <br>
+            <br>
 
-      <strong>Expressions vs Statements</strong>
-      <ul>
-        <li><strong>Expressions</strong> produce values and can be nested.</li>
-        <li><strong>Statements</strong> perform actions and control execution.</li>
-      </ul>
+            <strong>Expressions vs Statements</strong>
+            <ul>
+              <li><strong>Expressions</strong> produce values and can be nested.</li>
+              <li><strong>Statements</strong> perform actions and control execution.</li>
+            </ul>
 
-      This separation ensures a clean and predictable structure in both parsing and execution.
-    </p>
-  </div>
-</section>
+            This separation ensures a clean and predictable structure in both parsing and execution.
+            </p>
+          </div>
+        </section>
 
-<section class="doc-section" id="dn-stmt-2">
-  <span class="doc-tag">Dev Notes / ast</span>
-  <h2>Statement Syntax Trees</h2>
-  <p><!-- TODO: explain AST structure for statements --></p>
+        <section class="doc-section" id="dn-stmt-2">
+          <span class="doc-tag">Dev Notes / ast</span>
+          <h2>Statement Syntax Trees</h2>
+          <p><!-- TODO: explain AST structure for statements --></p>
 
-  <div class="callout">
-    <span class="callout-label">Design note</span>
-    <p>
-      Expressions and statements are represented using separate class hierarchies in the AST.
+          <div class="callout">
+            <span class="callout-label">Design note</span>
+            <p>
+              Expressions and statements are represented using separate class hierarchies in the AST.
 
-      <ul>
-        <li><code>Expr</code> → represents expressions (value-producing)</li>
-        <li><code>Stmt</code> → represents statements (execution-oriented)</li>
-      </ul>
+            <ul>
+              <li><code>Expr</code> → represents expressions (value-producing)</li>
+              <li><code>Stmt</code> → represents statements (execution-oriented)</li>
+            </ul>
 
-      This separation improves:
-      <ul>
-        <li>Type safety (compile-time validation)</li>
-        <li>Code clarity and maintainability</li>
-        <li>Clear separation of responsibilities</li>
-      </ul>
+            This separation improves:
+            <ul>
+              <li>Type safety (compile-time validation)</li>
+              <li>Code clarity and maintainability</li>
+              <li>Clear separation of responsibilities</li>
+            </ul>
 
-      <br>
+            <br>
 
-      <strong>Base Class</strong>
-      <pre><code>abstract class Stmt {}</code></pre>
+            <strong>Base Class</strong>
+            <pre><code>abstract class Stmt {}</code></pre>
 
-      The AST generator is extended to include statements, producing specific subclasses such as print and expression statements.
-    </p>
-  </div>
-</section>
+            The AST generator is extended to include statements, producing specific subclasses such as print and
+            expression statements.
+            </p>
+          </div>
+        </section>
 
-<section class="doc-section" id="dn-stmt-3">
-  <span class="doc-tag">Dev Notes / variables</span>
-  <h2>Variables &amp; Declarations</h2>
-  <p><!-- TODO: explain variable handling --></p>
+        <section class="doc-section" id="dn-stmt-3">
+          <span class="doc-tag">Dev Notes / variables</span>
+          <h2>Variables &amp; Declarations</h2>
+          <p><!-- TODO: explain variable handling --></p>
 
-  <div class="callout">
-    <span class="callout-label">Design note</span>
-    <p>
-      <strong>Variable Declaration</strong><br>
-      A variable declaration introduces a new binding between a name and a value.
+          <div class="callout">
+            <span class="callout-label">Design note</span>
+            <p>
+              <strong>Variable Declaration</strong><br>
+              A variable declaration introduces a new binding between a name and a value.
 
-      <pre><code>var beverage = "espresso";</code></pre>
+            <pre><code>var beverage = "espresso";</code></pre>
 
-      <br>
+            <br>
 
-      <strong>Variable Access</strong><br>
-      A variable expression retrieves the value associated with a name.
+            <strong>Variable Access</strong><br>
+            A variable expression retrieves the value associated with a name.
 
-      <pre><code>print beverage;</code></pre>
+            <pre><code>print beverage;</code></pre>
 
-      <br>
+            <br>
 
-      <strong>Grammar</strong>
-      <pre><code>
+            <strong>Grammar</strong>
+            <pre><code>
 program      → declaration* EOF ;
 
 declaration  → varDecl
@@ -557,121 +714,123 @@ varDecl      → "var" IDENTIFIER ( "=" expression )? ";" ;
 primary      → IDENTIFIER | ... ;
       </code></pre>
 
-      <br>
+            <br>
 
-      If no initializer is provided, the variable is assigned a default value (<code>nil</code>).
+            If no initializer is provided, the variable is assigned a default value (<code>nil</code>).
 
-      Accessing a variable before it is defined results in a runtime error.
-    </p>
-  </div>
-</section>
+            Accessing a variable before it is defined results in a runtime error.
+            </p>
+          </div>
+        </section>
 
-<section class="doc-section" id="dn-stmt-4">
-  <span class="doc-tag">Dev Notes / environment</span>
-  <h2>Environment &amp; Variable Storage</h2>
-  <p><!-- TODO: explain environment structure --></p>
+        <section class="doc-section" id="dn-stmt-4">
+          <span class="doc-tag">Dev Notes / environment</span>
+          <h2>Environment &amp; Variable Storage</h2>
+          <p><!-- TODO: explain environment structure --></p>
 
-  <div class="callout">
-    <span class="callout-label">Design note</span>
-    <p>
-      Variable bindings are stored in a structure called an <strong>environment</strong>.
+          <div class="callout">
+            <span class="callout-label">Design note</span>
+            <p>
+              Variable bindings are stored in a structure called an <strong>environment</strong>.
 
-      Internally, this behaves like a map:
-      <ul>
-        <li>Keys → variable names</li>
-        <li>Values → runtime values</li>
-      </ul>
+              Internally, this behaves like a map:
+            <ul>
+              <li>Keys → variable names</li>
+              <li>Values → runtime values</li>
+            </ul>
 
-      The interpreter maintains an environment instance to store variables during execution.
+            The interpreter maintains an environment instance to store variables during execution.
 
-      <pre><code>
+            <pre><code>
 private Environment environment = new Environment();
       </code></pre>
 
-      <br>
+            <br>
 
-      Operations supported:
-      <ul>
-        <li>Define a variable</li>
-        <li>Retrieve a variable’s value</li>
-        <li>Update an existing variable</li>
-      </ul>
+            Operations supported:
+            <ul>
+              <li>Define a variable</li>
+              <li>Retrieve a variable’s value</li>
+              <li>Update an existing variable</li>
+            </ul>
 
-      This structure allows variables to persist throughout program execution.
-    </p>
-  </div>
-</section>
+            This structure allows variables to persist throughout program execution.
+            </p>
+          </div>
+        </section>
 
-<section class="doc-section" id="dn-stmt-5">
-  <span class="doc-tag">Dev Notes / assignment</span>
-  <h2>Assignment</h2>
-  <p><!-- TODO: explain assignment semantics --></p>
+        <section class="doc-section" id="dn-stmt-5">
+          <span class="doc-tag">Dev Notes / assignment</span>
+          <h2>Assignment</h2>
+          <p><!-- TODO: explain assignment semantics --></p>
 
-  <div class="callout">
-    <span class="callout-label">Design note</span>
-    <p>
-      Assignment allows updating the value of an existing variable.
+          <div class="callout">
+            <span class="callout-label">Design note</span>
+            <p>
+              Assignment allows updating the value of an existing variable.
 
-      <pre><code>a = 2;</code></pre>
+            <pre><code>a = 2;</code></pre>
 
-      <br>
+            <br>
 
-      In this language, assignment is an <strong>expression</strong>, not a statement. It has the lowest precedence and is
-      right-associative.
+            In this language, assignment is an <strong>expression</strong>, not a statement. It has the lowest
+            precedence and is
+            right-associative.
 
-      <pre><code>
+            <pre><code>
 expression → assignment ;
 
 assignment → IDENTIFIER "=" assignment
            | equality ;
       </code></pre>
 
-      <br>
+            <br>
 
-      <strong>Key Concept</strong>
-      <ul>
-        <li><strong>l-value:</strong> location being assigned to</li>
-        <li><strong>r-value:</strong> value being assigned</li>
-      </ul>
+            <strong>Key Concept</strong>
+            <ul>
+              <li><strong>l-value:</strong> location being assigned to</li>
+              <li><strong>r-value:</strong> value being assigned</li>
+            </ul>
 
-      Only valid assignment targets (like variables) are allowed. Invalid targets result in a syntax error.
+            Only valid assignment targets (like variables) are allowed. Invalid targets result in a syntax error.
 
-      Assignment expressions return the assigned value, allowing chaining:
+            Assignment expressions return the assigned value, allowing chaining:
 
-      <pre><code>print a = 2; // prints 2</code></pre>
-    </p>
-  </div>
-</section>
+            <pre><code>print a = 2; // prints 2</code></pre>
+            </p>
+          </div>
+        </section>
 
-<section class="doc-section" id="dn-stmt-6">
-  <span class="doc-tag">Dev Notes / scope</span>
-  <h2>Scope &amp; Block Execution</h2>
-  <p><!-- TODO: explain scope and block handling --></p>
+        <section class="doc-section" id="dn-stmt-6">
+          <span class="doc-tag">Dev Notes / scope</span>
+          <h2>Scope &amp; Block Execution</h2>
+          <p><!-- TODO: explain scope and block handling --></p>
 
-  <div class="callout">
-    <span class="callout-label">Design note</span>
-    <p>
-      A <strong>scope</strong> defines where a variable is accessible.
+          <div class="callout">
+            <span class="callout-label">Design note</span>
+            <p>
+              A <strong>scope</strong> defines where a variable is accessible.
 
-      This language uses <strong>lexical scope</strong>, meaning variable resolution is determined by the structure of the
-      code.
+              This language uses <strong>lexical scope</strong>, meaning variable resolution is determined by the
+              structure of the
+              code.
 
-      <br><br>
+              <br><br>
 
-      <strong>Block Scope</strong>
-      <pre><code>
+              <strong>Block Scope</strong>
+            <pre><code>
 {
   var a = "inside";
 }
 print a; // Error
       </code></pre>
 
-      Variables declared inside a block are only accessible within that block.
+            Variables declared inside a block are only accessible within that block.
 
-      <br><br>
+            <br><br>
 
-      <strong>Nested Scope &amp; Shadowing</strong>
-      <pre><code>
+            <strong>Nested Scope &amp; Shadowing</strong>
+            <pre><code>
 var a = "global";
 {
   var a = "local";
@@ -680,73 +839,75 @@ var a = "global";
 print a; // global
       </code></pre>
 
-      Inner variables can <strong>shadow</strong> outer variables without modifying them.
+            Inner variables can <strong>shadow</strong> outer variables without modifying them.
 
-      <br><br>
+            <br><br>
 
-      <strong>Environment Chaining</strong><br>
-      Each block creates a new environment linked to its enclosing one.
+            <strong>Environment Chaining</strong><br>
+            Each block creates a new environment linked to its enclosing one.
 
-      Variable lookup proceeds from:
-      <ul>
-        <li>Current (innermost) scope</li>
-        <li>Outward through enclosing scopes</li>
-      </ul>
+            Variable lookup proceeds from:
+            <ul>
+              <li>Current (innermost) scope</li>
+              <li>Outward through enclosing scopes</li>
+            </ul>
 
-      This ensures correct resolution of both local and global variables.
+            This ensures correct resolution of both local and global variables.
 
-      <br><br>
+            <br><br>
 
-      <strong>Block Grammar</strong>
-      <pre><code>
+            <strong>Block Grammar</strong>
+            <pre><code>
 statement → exprStmt
           | printStmt
           | block ;
 
 block     → "{" declaration* "}" ;
       </code></pre>
-    </p>
-  </div>
-</section>
+            </p>
+          </div>
+        </section>
       </section>
 
-<section class="doc-section " id="dn-cf">
-  <section class="doc-section" id="dn-control-1">
-  <span class="doc-tag">Dev Notes / control-flow</span>
-  <h2>Control Flow Overview</h2>
-  <p><!-- TODO: explain control flow model --></p>
+      <section class="doc-section " id="dn-cf">
+        <section class="doc-section" id="dn-control-1">
+          <span class="doc-tag">Dev Notes / control-flow</span>
+          <h2>Control Flow Overview</h2>
+          <p><!-- TODO: explain control flow model --></p>
 
-  <div class="callout">
-    <span class="callout-label">Design note</span>
-    <p>
-      Any sufficiently expressive programming language is capable of performing arbitrary computation. This idea is
-      formalized through models like Turing machines and lambda calculus.
+          <div class="callout">
+            <span class="callout-label">Design note</span>
+            <p>
+              Any sufficiently expressive programming language is capable of performing arbitrary computation. This idea
+              is
+              formalized through models like Turing machines and lambda calculus.
 
-      <br><br>
+              <br><br>
 
-      In practice, control flow determines how a program executes. It can be broadly divided into:
+              In practice, control flow determines how a program executes. It can be broadly divided into:
 
-      <ul>
-        <li><strong>Conditional flow:</strong> executes code selectively</li>
-        <li><strong>Looping flow:</strong> repeats execution of code</li>
-      </ul>
+            <ul>
+              <li><strong>Conditional flow:</strong> executes code selectively</li>
+              <li><strong>Looping flow:</strong> repeats execution of code</li>
+            </ul>
 
-      These constructs allow programs to make decisions and perform repeated computations. :contentReference[oaicite:0]{index=0}
-    </p>
-  </div>
-</section>
+            These constructs allow programs to make decisions and perform repeated computations.
+            :contentReference[oaicite:0]{index=0}
+            </p>
+          </div>
+        </section>
 
-<section class="doc-section" id="dn-control-2">
-  <span class="doc-tag">Dev Notes / conditional</span>
-  <h2>Conditional Execution</h2>
-  <p><!-- TODO: explain if statement behavior --></p>
+        <section class="doc-section" id="dn-control-2">
+          <span class="doc-tag">Dev Notes / conditional</span>
+          <h2>Conditional Execution</h2>
+          <p><!-- TODO: explain if statement behavior --></p>
 
-  <div class="callout">
-    <span class="callout-label">Design note</span>
-    <p>
-      The <code>if</code> statement enables conditional execution based on a boolean expression.
+          <div class="callout">
+            <span class="callout-label">Design note</span>
+            <p>
+              The <code>if</code> statement enables conditional execution based on a boolean expression.
 
-      <pre><code>
+            <pre><code>
 statement → exprStmt
           | ifStmt
           | printStmt
@@ -756,36 +917,38 @@ ifStmt    → "if" "(" expression ")" statement
            ( "else" statement )? ;
       </code></pre>
 
-      <br>
+            <br>
 
-      <strong>Behavior</strong>
-      <ul>
-        <li>If the condition is truthy → execute the first statement</li>
-        <li>If falsey and <code>else</code> exists → execute the alternative statement</li>
-      </ul>
+            <strong>Behavior</strong>
+            <ul>
+              <li>If the condition is truthy → execute the first statement</li>
+              <li>If falsey and <code>else</code> exists → execute the alternative statement</li>
+            </ul>
 
-      <br>
+            <br>
 
-      <strong>Dangling Else Problem</strong><br>
-      When nested <code>if</code> statements omit braces, it can be unclear which <code>if</code> an <code>else</code>
-      belongs to. This ambiguity is resolved by associating the <code>else</code> with the nearest preceding
-      <code>if</code>.
-    </p>
-  </div>
-</section>
+            <strong>Dangling Else Problem</strong><br>
+            When nested <code>if</code> statements omit braces, it can be unclear which <code>if</code> an
+            <code>else</code>
+            belongs to. This ambiguity is resolved by associating the <code>else</code> with the nearest preceding
+            <code>if</code>.
+            </p>
+          </div>
+        </section>
 
-<section class="doc-section" id="dn-control-3">
-  <span class="doc-tag">Dev Notes / logical</span>
-  <h2>Logical Operators</h2>
-  <p><!-- TODO: explain logical short-circuiting --></p>
+        <section class="doc-section" id="dn-control-3">
+          <span class="doc-tag">Dev Notes / logical</span>
+          <h2>Logical Operators</h2>
+          <p><!-- TODO: explain logical short-circuiting --></p>
 
-  <div class="callout">
-    <span class="callout-label">Design note</span>
-    <p>
-      Logical operators <code>and</code> and <code>or</code> are also control flow constructs, as they determine whether
-      expressions are evaluated.
+          <div class="callout">
+            <span class="callout-label">Design note</span>
+            <p>
+              Logical operators <code>and</code> and <code>or</code> are also control flow constructs, as they determine
+              whether
+              expressions are evaluated.
 
-      <pre><code>
+            <pre><code>
 expression → assignment ;
 assignment → IDENTIFIER "=" assignment
            | logic_or ;
@@ -794,28 +957,28 @@ logic_or   → logic_and ( "or" logic_and )* ;
 logic_and  → equality ( "and" equality )* ;
       </code></pre>
 
-      <br>
+            <br>
 
-      These operators typically use <strong>short-circuit evaluation</strong>:
-      <ul>
-        <li><code>or</code> stops when a truthy value is found</li>
-        <li><code>and</code> stops when a falsey value is found</li>
-      </ul>
-    </p>
-  </div>
-</section>
+            These operators typically use <strong>short-circuit evaluation</strong>:
+            <ul>
+              <li><code>or</code> stops when a truthy value is found</li>
+              <li><code>and</code> stops when a falsey value is found</li>
+            </ul>
+            </p>
+          </div>
+        </section>
 
-<section class="doc-section" id="dn-control-4">
-  <span class="doc-tag">Dev Notes / loops</span>
-  <h2>While Loop</h2>
-  <p><!-- TODO: explain loop execution --></p>
+        <section class="doc-section" id="dn-control-4">
+          <span class="doc-tag">Dev Notes / loops</span>
+          <h2>While Loop</h2>
+          <p><!-- TODO: explain loop execution --></p>
 
-  <div class="callout">
-    <span class="callout-label">Design note</span>
-    <p>
-      The <code>while</code> loop repeatedly executes a statement as long as its condition remains truthy.
+          <div class="callout">
+            <span class="callout-label">Design note</span>
+            <p>
+              The <code>while</code> loop repeatedly executes a statement as long as its condition remains truthy.
 
-      <pre><code>
+            <pre><code>
 statement  → exprStmt
            | ifStmt
            | printStmt
@@ -825,184 +988,188 @@ statement  → exprStmt
 whileStmt  → "while" "(" expression ")" statement ;
       </code></pre>
 
-      <br>
+            <br>
 
-      <strong>Behavior</strong>
-      <ul>
-        <li>Evaluate condition</li>
-        <li>If truthy → execute body</li>
-        <li>Repeat until condition becomes false</li>
-      </ul>
-    </p>
-  </div>
-</section>
+            <strong>Behavior</strong>
+            <ul>
+              <li>Evaluate condition</li>
+              <li>If truthy → execute body</li>
+              <li>Repeat until condition becomes false</li>
+            </ul>
+            </p>
+          </div>
+        </section>
 
-<section class="doc-section" id="dn-control-5">
-  <span class="doc-tag">Dev Notes / for-loop</span>
-  <h2>For Loop</h2>
-  <p><!-- TODO: explain for loop desugaring --></p>
+        <section class="doc-section" id="dn-control-5">
+          <span class="doc-tag">Dev Notes / for-loop</span>
+          <h2>For Loop</h2>
+          <p><!-- TODO: explain for loop desugaring --></p>
 
-  <div class="callout">
-    <span class="callout-label">Design note</span>
-    <p>
-      The <code>for</code> loop provides a compact way to write iteration logic.
+          <div class="callout">
+            <span class="callout-label">Design note</span>
+            <p>
+              The <code>for</code> loop provides a compact way to write iteration logic.
 
-      <pre><code>
+            <pre><code>
 forStmt → "for" "(" ( varDecl | exprStmt | ";" )
           expression? ";"
           expression? ")" statement ;
       </code></pre>
 
-      <br>
+            <br>
 
-      A <code>for</code> loop consists of three parts:
+            A <code>for</code> loop consists of three parts:
 
-      <ul>
-        <li><strong>Initializer:</strong> runs once before the loop starts</li>
-        <li><strong>Condition:</strong> checked before each iteration</li>
-        <li><strong>Increment:</strong> executed after each iteration</li>
-      </ul>
+            <ul>
+              <li><strong>Initializer:</strong> runs once before the loop starts</li>
+              <li><strong>Condition:</strong> checked before each iteration</li>
+              <li><strong>Increment:</strong> executed after each iteration</li>
+            </ul>
 
-      <br>
+            <br>
 
-      Example:
-      <pre><code>for (var i = 0; i &lt; 10; i = i + 1) print i;</code></pre>
+            Example:
+            <pre><code>for (var i = 0; i &lt; 10; i = i + 1) print i;</code></pre>
 
-      <br>
+            <br>
 
-      Internally, a <code>for</code> loop can be transformed into an equivalent <code>while</code> loop, making it a
-      higher-level construct built on top of simpler control flow.
-    </p>
-  </div>
-</section>
-</section>
-<!-- tesssssssssssssssssssss-->
-<section class="doc-section " id="dn-fn">
-  <section class="doc-section" id="dn-fn-1">
-  <span class="doc-tag">Dev Notes / functions</span>
-  <h2>Function Calls</h2>
-  <p><!-- TODO: explain function call evaluation --></p>
+            Internally, a <code>for</code> loop can be transformed into an equivalent <code>while</code> loop, making it
+            a
+            higher-level construct built on top of simpler control flow.
+            </p>
+          </div>
+        </section>
+      </section>
+      <!-- tesssssssssssssssssssss-->
+      <section class="doc-section " id="dn-fn">
+        <section class="doc-section" id="dn-fn-1">
+          <span class="doc-tag">Dev Notes / functions</span>
+          <h2>Function Calls</h2>
+          <p><!-- TODO: explain function call evaluation --></p>
 
-  <div class="callout">
-    <span class="callout-label">Design note</span>
-    <p>
-      A function call evaluates a <strong>callee</strong> expression and invokes it with arguments.
+          <div class="callout">
+            <span class="callout-label">Design note</span>
+            <p>
+              A function call evaluates a <strong>callee</strong> expression and invokes it with arguments.
 
-      <pre><code>callee(arguments);</code></pre>
+            <pre><code>callee(arguments);</code></pre>
 
-      The callee is not limited to identifiers—it can be any expression that evaluates to a callable object.
+            The callee is not limited to identifiers—it can be any expression that evaluates to a callable object.
 
-      <br><br>
+            <br><br>
 
-      <strong>Grammar</strong>
-      <pre><code>
+            <strong>Grammar</strong>
+            <pre><code>
 unary → ( "!" | "-" ) unary | call ;
 call  → primary ( "(" arguments? ")" )* ;
       </code></pre>
 
-      This allows chained calls such as:
-      <pre><code>fn(1)(2)(3);</code></pre>
+            This allows chained calls such as:
+            <pre><code>fn(1)(2)(3);</code></pre>
 
-      <br>
+            <br>
 
-      <strong>Evaluation Process</strong>
-      <ul>
-        <li>Evaluate the callee expression</li>
-        <li>Evaluate each argument (left to right)</li>
-        <li>Invoke the callable with evaluated arguments</li>
-      </ul>
+            <strong>Evaluation Process</strong>
+            <ul>
+              <li>Evaluate the callee expression</li>
+              <li>Evaluate each argument (left to right)</li>
+              <li>Invoke the callable with evaluated arguments</li>
+            </ul>
 
-      <br>
+            <br>
 
-      Callable objects implement a common interface (e.g., <code>LoxCallable</code>) which defines how calls are executed.
-      :contentReference[oaicite:0]{index=0}
-    </p>
-  </div>
-</section>
+            Callable objects implement a common interface (e.g., <code>SunCallable</code>) which defines how calls are
+            executed.
+            :contentReference[oaicite:0]{index=0}
+            </p>
+          </div>
+        </section>
 
-<section class="doc-section" id="dn-fn-2">
-  <span class="doc-tag">Dev Notes / call-errors</span>
-  <h2>Call Errors &amp; Arity</h2>
-  <p><!-- TODO: explain call validation --></p>
+        <section class="doc-section" id="dn-fn-2">
+          <span class="doc-tag">Dev Notes / call-errors</span>
+          <h2>Call Errors &amp; Arity</h2>
+          <p><!-- TODO: explain call validation --></p>
 
-  <div class="callout">
-    <span class="callout-label">Design note</span>
-    <p>
-      Function calls must be validated before execution.
+          <div class="callout">
+            <span class="callout-label">Design note</span>
+            <p>
+              Function calls must be validated before execution.
 
-      <br><br>
+              <br><br>
 
-      <strong>Invalid Call Targets</strong><br>
-      If the callee is not callable, a runtime error is raised:
+              <strong>Invalid Call Targets</strong><br>
+              If the callee is not callable, a runtime error is raised:
 
-      <pre><code>"not a function"();</code></pre>
+            <pre><code>"not a function"();</code></pre>
 
-      <br>
+            <br>
 
-      <strong>Arity Checking</strong><br>
-      Each function defines an <strong>arity</strong> (number of expected arguments).
+            <strong>Arity Checking</strong><br>
+            Each function defines an <strong>arity</strong> (number of expected arguments).
 
-      <pre><code>
+            <pre><code>
 fun add(a, b, c) {
   print a + b + c;
 }
       </code></pre>
 
-      Calling with incorrect argument count results in an error:
+            Calling with incorrect argument count results in an error:
 
-      <pre><code>
+            <pre><code>
 add(1, 2);       // too few
 add(1, 2, 3, 4); // too many
       </code></pre>
 
-      <br>
+            <br>
 
-      The interpreter validates argument count before invocation to ensure correctness.
-    </p>
-  </div>
-</section>
+            The interpreter validates argument count before invocation to ensure correctness.
+            </p>
+          </div>
+        </section>
 
-<section class="doc-section" id="dn-fn-3">
-  <span class="doc-tag">Dev Notes / native</span>
-  <h2>Native Functions</h2>
-  <p><!-- TODO: explain native functions --></p>
 
-  <div class="callout">
-    <span class="callout-label">Design note</span>
-    <p>
-      Native functions are implemented in the host language but exposed to user programs.
 
-      They are useful for:
-      <ul>
-        <li>Accessing system features (time, IO, etc.)</li>
-        <li>Providing built-in functionality</li>
-      </ul>
+        <section class="doc-section" id="dn-fn-3">
+          <span class="doc-tag">Dev Notes / native</span>
+          <h2>Native Functions</h2>
+          <p><!-- TODO: explain native functions --></p>
 
-      <br>
+          <div class="callout">
+            <span class="callout-label">Design note</span>
+            <p>
+              Native functions are implemented in the host language but exposed to user programs.
 
-      Example:
-      <pre><code>clock();</code></pre>
+              They are useful for:
+            <ul>
+              <li>Accessing system features (time, IO, etc.)</li>
+              <li>Providing built-in functionality</li>
+            </ul>
 
-      This function returns the current time, allowing programs to measure execution duration.
+            <br>
 
-      <br><br>
+            Example:
+            <pre><code>clock();</code></pre>
 
-      Native functions are part of the runtime and are typically registered in the global environment.
-    </p>
-  </div>
-</section>
+            This function returns the current time, allowing programs to measure execution duration.
 
-<section class="doc-section" id="dn-fn-4">
-  <span class="doc-tag">Dev Notes / declaration</span>
-  <h2>Function Declarations</h2>
-  <p><!-- TODO: explain function definition --></p>
+            <br><br>
 
-  <div class="callout">
-    <span class="callout-label">Design note</span>
-    <p>
-      Functions are declared using the <code>fun</code> keyword.
+            Native functions are part of the runtime and are typically registered in the global environment.
+            </p>
+          </div>
+        </section>
 
-      <pre><code>
+        <section class="doc-section" id="dn-fn-4">
+          <span class="doc-tag">Dev Notes / declaration</span>
+          <h2>Function Declarations</h2>
+          <p><!-- TODO: explain function definition --></p>
+
+          <div class="callout">
+            <span class="callout-label">Design note</span>
+            <p>
+              Functions are declared using the <code>fun</code> keyword.
+
+            <pre><code>
 declaration → funDecl
             | varDecl
             | statement ;
@@ -1011,51 +1178,52 @@ funDecl     → "fun" function ;
 function    → IDENTIFIER "(" parameters? ")" block ;
       </code></pre>
 
-      <br>
+            <br>
 
-      A function declaration:
-      <ul>
-        <li>Binds a name to a callable object</li>
-        <li>Defines parameters and a body</li>
-      </ul>
-    </p>
-  </div>
-</section>
+            A function declaration:
+            <ul>
+              <li>Binds a name to a callable object</li>
+              <li>Defines parameters and a body</li>
+            </ul>
+            </p>
+          </div>
+        </section>
 
-<section class="doc-section" id="dn-fn-5">
-  <span class="doc-tag">Dev Notes / return</span>
-  <h2>Return Statements</h2>
-  <p><!-- TODO: explain return behavior --></p>
+        <section class="doc-section" id="dn-fn-5">
+          <span class="doc-tag">Dev Notes / return</span>
+          <h2>Return Statements</h2>
+          <p><!-- TODO: explain return behavior --></p>
 
-  <div class="callout">
-    <span class="callout-label">Design note</span>
-    <p>
-      A <code>return</code> statement exits a function and optionally provides a value.
+          <div class="callout">
+            <span class="callout-label">Design note</span>
+            <p>
+              A <code>return</code> statement exits a function and optionally provides a value.
 
-      <pre><code>return expression;</code></pre>
+            <pre><code>return expression;</code></pre>
 
-      If no value is provided, the function returns <code>nil</code>.
+            If no value is provided, the function returns <code>nil</code>.
 
-      <br><br>
+            <br><br>
 
-      <strong>Execution Behavior</strong><br>
-      Return statements may appear inside nested constructs, but they must immediately exit the entire function.
+            <strong>Execution Behavior</strong><br>
+            Return statements may appear inside nested constructs, but they must immediately exit the entire function.
 
-      To implement this, the interpreter uses a controlled mechanism (such as exceptions) to unwind execution until the
-      function boundary is reached.
+            To implement this, the interpreter uses a controlled mechanism (such as exceptions) to unwind execution
+            until the
+            function boundary is reached.
 
-      <br><br>
+            <br><br>
 
-      This ensures:
-      <ul>
-        <li>Immediate function exit</li>
-        <li>Correct value propagation</li>
-        <li>Consistent execution behavior</li>
-      </ul>
-    </p>
-  </div>
-</section>
-</section>
+            This ensures:
+            <ul>
+              <li>Immediate function exit</li>
+              <li>Correct value propagation</li>
+              <li>Consistent execution behavior</li>
+            </ul>
+            </p>
+          </div>
+        </section>
+      </section>
 
 
       <section class="doc-section" id="dn-eval-1">
@@ -1257,33 +1425,13 @@ function    → IDENTIFIER "(" parameters? ")" block ;
         <p><!-- TODO: how objects are allocated --></p>
       </section>
 
-      <section class="doc-section" id="dn-gc-collect">
-        <h3>Collection</h3>
-        <p><!-- TODO: GC strategy — mark-and-sweep, reference counting, etc --></p>
-        <div class="callout">
-          <span class="callout-label">Design note</span>
-          <p><!-- TODO: why you chose this GC approach --></p>
-        </div>
-      </section>
-
-      <!-- ════ DEV NOTES — Errors ════ -->
-      <section class="doc-section" id="dn-errors-parse">
-        <span class="doc-tag">Dev Notes / Error Handling</span>
-        <h2>Parse Errors</h2>
-        <p><!-- TODO: how your parser reports and recovers from errors --></p>
-      </section>
-
-      <section class="doc-section" id="dn-errors-runtime">
-        <h3>Runtime Errors</h3>
-        <p><!-- TODO: how runtime errors are surfaced --></p>
-      </section>
 
     </main>
   </div>
 
   <!-- ── Footer ── -->
   <footer class="site-footer" style="margin-left: var(--sidebar-w);">
-    <span>© 2025 <!-- your name --></span>
+    <span>© 2026 Sunny</span>
     <span><a href="https://github.com/" target="_blank">GitHub</a></span>
   </footer>
 
