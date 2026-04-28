@@ -65,6 +65,52 @@ body { font-family: var(--sans); color: var(--text-main); background: var(--bg);
   background: var(--bg);
   border-bottom: 1px solid var(--border);
 }
+.hero-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8rem 10vw 6rem;
+  gap: 3rem;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+}
+
+/* Left side */
+.hero-left {
+  flex: 1;
+  max-width: 600px;
+}
+
+/* Right side */
+.hero-right {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.hero-right img {
+  width: 100%;
+  max-width: 500px;
+  border-radius: 8px;
+  opacity: 0.9;
+}
+@media (max-width: 900px) {
+  .hero-wrapper {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .hero-left {
+    align-items: center;
+  }
+
+  .hero-actions {
+    justify-content: center;
+  }
+}.hero-right img {
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+}
 .hero-eyebrow {
   font-family: var(--mono);
   font-size: 0.72rem;
